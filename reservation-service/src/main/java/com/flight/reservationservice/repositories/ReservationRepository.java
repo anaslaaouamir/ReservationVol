@@ -1,4 +1,7 @@
 package com.flight.reservationservice.repositories;
 
-public interface ReservationRepository {
+import com.flight.reservationservice.entities.Reservation;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 }

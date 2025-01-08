@@ -18,14 +18,18 @@ import java.time.LocalDateTime;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idClient;
+    private Long idReservation;
+
     private int numeroPlace;
     private LocalDateTime dateReservation;
     private String statut; //annulé ou confirmé
 
-    @Transient
-    Client client;
 
+    private Long idClient;
     @Transient
-    Vol vol;
+    private Client client;
+
+    private Long idVol;
+    @Transient
+    private Vol vol;
 }
