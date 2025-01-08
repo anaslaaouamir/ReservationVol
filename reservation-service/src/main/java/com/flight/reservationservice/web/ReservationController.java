@@ -1,8 +1,10 @@
 package com.flight.reservationservice.web;
 
+import com.flight.reservationservice.entities.Paiement;
 import com.flight.reservationservice.entities.Reservation;
 import com.flight.reservationservice.models.Client;
 import com.flight.reservationservice.models.Vol;
+import com.flight.reservationservice.repositories.PaiementRepository;
 import com.flight.reservationservice.repositories.ReservationRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,4 +54,6 @@ public class ReservationController {
         }
         return ress;
     }
+
+
 }

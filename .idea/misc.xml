@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/OffreVol-service/pom.xml" />
         <option value="$PROJECT_DIR$/reservation-service/pom.xml" />
         <option value="$PROJECT_DIR$/discovery-service/pom.xml" />
+        <option value="$PROJECT_DIR$/supportClient-microservice/pom.xml" />
       </list>
     </option>
   </component>

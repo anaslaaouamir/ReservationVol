@@ -1,5 +1,6 @@
 package com.flight.reservationservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.flight.reservationservice.models.Client;
 import com.flight.reservationservice.models.Vol;
 import jakarta.persistence.*;
@@ -32,4 +33,9 @@ public class Reservation {
     private Long idVol;
     @Transient
     private Vol vol;
+
+
+    @OneToOne(mappedBy = "reservation")
+    @JsonManagedReference
+    private Paiement paiement;
 }
