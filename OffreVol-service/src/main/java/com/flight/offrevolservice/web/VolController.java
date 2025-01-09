@@ -45,4 +45,13 @@ public class VolController {
         BeanUtils.copyProperties(vol,vol1);
         volRepository.save(vol1);
     }
+
+    //decrementer le nombre des places d'une vol aprés une réservation
+
+    @PutMapping("/{id}/decrement")
+    public void decrement(@PathVariable Long id) {
+        Vol vol= volRepository.findById(id).get();
+        vol.setPlacesDisponibles(vol.getPlacesDisponibles() - 1);
+        volRepository.save(vol);
+    }
 }

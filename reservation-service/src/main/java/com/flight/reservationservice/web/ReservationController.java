@@ -6,9 +6,7 @@ import com.flight.reservationservice.models.Client;
 import com.flight.reservationservice.models.Vol;
 import com.flight.reservationservice.repositories.PaiementRepository;
 import com.flight.reservationservice.repositories.ReservationRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +51,12 @@ public class ReservationController {
             ress.add(res);
         }
         return ress;
+    }
+
+    @PostMapping("reservations")
+    public void ajouterReservation(@RequestBody Reservation reservation) {
+         reservationRepository.save(reservation);
+         volOpenFeign.decrement(reservation.getIdVol());
     }
 
 
