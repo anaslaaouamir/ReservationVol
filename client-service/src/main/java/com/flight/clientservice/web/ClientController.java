@@ -12,9 +12,11 @@ import java.util.List;
 public class ClientController {
 
     ClientRepository clientRepository;
+    ReservationOpenFeign reservationOpenFeign;
 
-    ClientController(ClientRepository clientRepository) {
+    ClientController(ClientRepository clientRepository,ReservationOpenFeign reservationOpenFeign) {
         this.clientRepository = clientRepository;
+        this.reservationOpenFeign = reservationOpenFeign;
     }
 
 
@@ -35,6 +37,7 @@ public class ClientController {
 
     @DeleteMapping("/clients/{id}")
     public void deleteClient(@PathVariable Long id) {
+        reservationOpenFeign.supprimerReservationClient(id);
         Client cl= clientRepository.findById(id).get();
         clientRepository.delete(cl);
     }
@@ -45,4 +48,6 @@ public class ClientController {
         BeanUtils.copyProperties(client,client1);
         clientRepository.save(client1);
     }
+
+
 }

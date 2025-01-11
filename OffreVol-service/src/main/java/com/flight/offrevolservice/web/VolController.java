@@ -13,9 +13,11 @@ import java.util.List;
 public class VolController {
 
     VolRepository volRepository;
+    ReservationOpenFeign reservationOpenFeign;
 
-    VolController(VolRepository volRepository) {
+    VolController(VolRepository volRepository,ReservationOpenFeign reservationOpenFeign) {
         this.volRepository = volRepository;
+        this.reservationOpenFeign = reservationOpenFeign;
     }
 
     @GetMapping("/vols")
@@ -36,6 +38,7 @@ public class VolController {
     @DeleteMapping("/vols/{id}")
     public void deleteVol(@PathVariable Long id) {
         Vol vol= volRepository.findById(id).get();
+        reservationOpenFeign.supprimerReservationVol(id);
         volRepository.delete(vol);
     }
 
@@ -52,6 +55,13 @@ public class VolController {
     public void decrement(@PathVariable Long id) {
         Vol vol= volRepository.findById(id).get();
         vol.setPlacesDisponibles(vol.getPlacesDisponibles() - 1);
+        volRepository.save(vol);
+    }
+
+    @PutMapping("/{id}/increment")
+    public void increment(@PathVariable Long id) {
+        Vol vol= volRepository.findById(id).get();
+        vol.setPlacesDisponibles(vol.getPlacesDisponibles() + 1);
         volRepository.save(vol);
     }
 }

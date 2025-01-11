@@ -9,17 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="discovery-service" />
       </profile>
-      <profile name="Annotation profile for Client-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
-        <module name="OffreVol-service" />
-        <module name="client-service" />
-        <module name="reservation-service" />
-      </profile>
       <profile name="Annotation profile for supportClient-microservice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -29,6 +18,17 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
         <module name="supportClient-microservice" />
+      </profile>
+      <profile name="Annotation profile for OffreVol-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+        </processorPath>
+        <module name="OffreVol-service" />
+        <module name="reservation-service" />
+        <module name="client-service" />
       </profile>
     </annotationProcessing>
   </component>

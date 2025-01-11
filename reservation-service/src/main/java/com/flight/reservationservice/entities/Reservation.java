@@ -35,7 +35,7 @@ public class Reservation {
     private Vol vol;
 
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Paiement paiement;
 }

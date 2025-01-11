@@ -19,4 +19,7 @@ public interface VolOpenFeign {
 
     @PutMapping("/{id}/decrement")
     public Vol decrement(@PathVariable Long id);
+
+    @PutMapping("/{id}/increment")
+    public Vol increment(@PathVariable Long id);
 }
