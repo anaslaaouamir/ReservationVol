@@ -20,6 +20,8 @@ public class VolController {
         this.reservationOpenFeign = reservationOpenFeign;
     }
 
+    //reservation dispo
+
     @GetMapping("/vols")
     public List<Vol> vols() {
         return  volRepository.findAll();

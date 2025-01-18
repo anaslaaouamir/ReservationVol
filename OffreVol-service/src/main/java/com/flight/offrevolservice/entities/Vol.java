@@ -34,5 +34,5 @@ public class Vol {
 
     private int placesDisponibles;
 
-    private String statut; // Exemples : "Programmé", "Retardé", "Annulé"
+    private String statut;
 }

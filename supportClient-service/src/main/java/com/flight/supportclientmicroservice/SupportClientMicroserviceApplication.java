@@ -1,7 +1,9 @@
 package com.flight.supportclientmicroservice;
 
 import com.flight.supportclientmicroservice.entities.SupportTicket;
+import com.flight.supportclientmicroservice.entities.TicketMessage;
 import com.flight.supportclientmicroservice.repositories.SupportTicketRepository;
+import com.flight.supportclientmicroservice.repositories.TicketMessageRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +22,7 @@ public class SupportClientMicroserviceApplication {
     }
 
     @Bean
-    CommandLineRunner start(SupportTicketRepository supportTicketRepository) {
+    CommandLineRunner start(SupportTicketRepository supportTicketRepository, TicketMessageRepository ticketMessageRepository) {
         return args -> {
             SupportTicket st=SupportTicket.builder()
                     .sujet("Demande de refund")
@@ -33,9 +35,20 @@ public class SupportClientMicroserviceApplication {
 
             supportTicketRepository.save(st);
 
-            System.out.println("fetched ********************"+supportTicketRepository.findAll());
 
+            TicketMessage tm=TicketMessage.builder()
+                    .ticket(st)
+                    .sender("Admin")
+                    .content("Pouquoi?")
+                    .build();
+            ticketMessageRepository.save(tm);
 
+            TicketMessage tm1=TicketMessage.builder()
+                    .ticket(st)
+                    .sender("Client")
+                    .content("Urgence médicale")
+                    .build();
+            ticketMessageRepository.save(tm1);
         };
     }
 
