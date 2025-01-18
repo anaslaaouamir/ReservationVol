@@ -23,7 +23,7 @@ public class Reservation {
 
     private int numeroPlace;
     private LocalDateTime dateReservation;
-    private String statut; //annulé ou confirmé
+    private String statut;
 
 
     private Long idClient;
