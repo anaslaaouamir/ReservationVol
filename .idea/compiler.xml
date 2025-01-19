@@ -27,16 +27,25 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="OffreVol-service" />
         <module name="supportClient-service" />
         <module name="reservation-service" />
         <module name="client-service" />
+      </profile>
+      <profile name="Annotation profile for OffreVol-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+        </processorPath>
+        <module name="Offrevol-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="OffreVol-service" options="-parameters" />
+      <module name="Offrevol-service" options="-parameters" />
       <module name="client-service" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />

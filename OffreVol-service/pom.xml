@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.flight</groupId>
-    <artifactId>OffreVol-service</artifactId>
+    <artifactId>Offrevol-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>OffreVol-service</name>
     <description>OffreVol-service</description>
