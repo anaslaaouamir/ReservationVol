@@ -5,6 +5,8 @@ import com.flight.offrevolservice.repositories.VolRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -66,4 +68,44 @@ public class VolController {
         vol.setPlacesDisponibles(vol.getPlacesDisponibles() + 1);
         volRepository.save(vol);
     }
+
+    @GetMapping("/ClientChercherVol")
+    public List<Vol> chercherVol(
+            @RequestParam String villeDepart,
+            @RequestParam String villeDestination,
+            @RequestParam int day,
+            @RequestParam int month,
+            @RequestParam int year
+    ) {
+        // Create LocalDateTime range for the specified date
+        LocalDateTime startOfDay = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
+
+        // Fetch flights based on criteria
+        return volRepository.findByVilleDepartAndVilleDestinationAndHeureDepartBetween(
+                villeDepart, villeDestination, startOfDay, endOfDay
+        );
+    }
+
+    @GetMapping("/AdminChercherVol")
+    public List<Vol> chercherVolFlexible(
+            @RequestParam(required = false) String villeDepart,
+            @RequestParam(required = false) String villeDestination,
+            @RequestParam(required = false) Integer day,
+            @RequestParam(required = false) Integer month,
+            @RequestParam(required = false) Integer year
+    ) {
+        LocalDateTime startOfDay = null;
+        LocalDateTime endOfDay = null;
+
+        // If date parameters are provided, calculate the start and end of the day
+        if (day != null && month != null && year != null) {
+            startOfDay = LocalDateTime.of(year, month, day, 0, 0);
+            endOfDay = startOfDay.plusDays(1).minusSeconds(1);
+        }
+
+        // Call repository method with the provided parameters
+        return volRepository.searchVols(villeDepart, villeDestination, startOfDay, endOfDay);
+    }
+
 }

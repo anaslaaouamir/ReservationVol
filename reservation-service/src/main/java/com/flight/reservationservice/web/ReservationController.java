@@ -139,5 +139,27 @@ public class ReservationController {
         }
     }
 
+    @GetMapping("/clientVolReserves/{idClient}")
+    public List<Vol> clientVolReserves(@PathVariable Long idClient,@RequestParam(required = false) String villeDepart,
+                                       @RequestParam(required = false) String villeDestination,
+                                       @RequestParam(required = false) Integer day,
+                                       @RequestParam(required = false) Integer month,
+                                       @RequestParam(required = false) Integer year) {
+
+        List<Vol> vols=volOpenFeign.chercherVolFlexible(villeDepart,villeDestination,day,month,year);
+        List<Reservation> reservations = clientReservations(idClient);
+        List<Vol> vols1 = new ArrayList<>();
+        for(Reservation r:reservations){
+            for(Vol v:vols){
+                if(r.getIdVol().equals(v.getIdVol())){
+                    vols1.add(v);
+                }
+            }
+        }
+        return vols1;
+
+    }
+
+
 
 }
