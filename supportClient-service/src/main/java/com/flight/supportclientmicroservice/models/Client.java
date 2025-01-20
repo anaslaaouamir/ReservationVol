@@ -4,10 +4,10 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @ToString
 @Getter
 @Setter
+@Builder
 
 public class Client {
     private Long idClient;

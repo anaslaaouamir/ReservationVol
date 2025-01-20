@@ -5,6 +5,8 @@ import com.flight.supportclientmicroservice.entities.TicketMessage;
 import com.flight.supportclientmicroservice.models.Client;
 import com.flight.supportclientmicroservice.repositories.SupportTicketRepository;
 import com.flight.supportclientmicroservice.repositories.TicketMessageRepository;
+import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -82,6 +84,15 @@ public class SupportTicketController {
         st.setStatut("Solved");
         supportTicketRepository.save(st);
     }
+
+    @Autowired
+    private CircuitBreakerRegistry circuitBreakerRegistry;
+
+    @GetMapping("/circuitbreaker-status")
+    public String getCircuitBreakerStatus() {
+        return circuitBreakerRegistry.circuitBreaker("supportServiceCB").getState().name();
+    }
+
 
 
 }
