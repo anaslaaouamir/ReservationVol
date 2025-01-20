@@ -49,5 +49,10 @@ public class ClientController {
         clientRepository.save(client1);
     }
 
+    @GetMapping("chercherClients")
+    public List<Client> chercherClients(@RequestParam String recherche) {
+        return clientRepository.searchClients(recherche);
+    }
+
 
 }
