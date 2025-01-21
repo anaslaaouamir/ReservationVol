@@ -9,14 +9,17 @@ import java.util.List;
 
 @RestController
 
+
 public class ClientController {
 
     ClientRepository clientRepository;
     ReservationOpenFeign reservationOpenFeign;
+    SupportTicketOpenFeign supportTicketOpenFeign;
 
-    ClientController(ClientRepository clientRepository,ReservationOpenFeign reservationOpenFeign) {
+    ClientController(ClientRepository clientRepository,ReservationOpenFeign reservationOpenFeign,SupportTicketOpenFeign supportTicketOpenFeign) {
         this.clientRepository = clientRepository;
         this.reservationOpenFeign = reservationOpenFeign;
+        this.supportTicketOpenFeign=supportTicketOpenFeign;
     }
 
 
@@ -38,6 +41,7 @@ public class ClientController {
     @DeleteMapping("/clients/{id}")
     public void deleteClient(@PathVariable Long id) {
         reservationOpenFeign.supprimerReservationClient(id);
+        supportTicketOpenFeign.supprimerTicket(id);
         Client cl= clientRepository.findById(id).get();
         clientRepository.delete(cl);
     }

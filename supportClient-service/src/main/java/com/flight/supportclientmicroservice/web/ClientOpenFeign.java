@@ -1,21 +1,58 @@
 package com.flight.supportclientmicroservice.web;
 
 import com.flight.supportclientmicroservice.models.Client;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import feign.FeignException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.concurrent.TimeUnit;
+
 @FeignClient(name = "CLIENT-SERVICE")
 public interface ClientOpenFeign {
 
-    @GetMapping("/clients/{id}")
-    @CircuitBreaker(name="supportServiceCB", fallbackMethod = "getDefaultClient")
-    public Client findById(@PathVariable Long id);
+    // Cache instance for storing client data
+    Cache<Long, Client> clientCache = Caffeine.newBuilder()
+            .expireAfterWrite(10, TimeUnit.MINUTES) // Cache entries expire after 10 minutes
+            .maximumSize(100) // Limit the cache size to 100 entries
+            .build();
 
-    public default Client getDefaultClient(Long id, Throwable t) {
-        return Client.builder().idClient(id).nom("default").email("default").telephone("default").build();
+    @GetMapping("/clients/{id}")
+    @CircuitBreaker(name = "supportServiceCB", fallbackMethod = "getDefaultClient")
+    default Client findById(@PathVariable Long id) {
+
+        Client fetchedClient = fetchClientFromService(id);
+        Client cachedClient = clientCache.getIfPresent(id);
+
+        if (cachedClient == null) {
+            clientCache.put(id, fetchedClient); // Store the client in cache
+        }
+        return fetchedClient;
+    }
+
+    // Direct call to the service
+    @GetMapping("/clients/{id}")
+    Client fetchClientFromService(@PathVariable Long id);
+
+    // Fallback method for the circuit breaker
+    default Client getDefaultClient(Long id, Throwable t) {
+
+        System.out.println("**********************inside getDefaultClient*********");
+
+        Client cachedClient = clientCache.getIfPresent(id);
+        if (cachedClient != null) {
+            return cachedClient;
+        }
+        // Return a default client object if no cache is available
+        return Client.builder()
+                .idClient(id)
+                .nom("default")
+                .email("default")
+                .telephone("default")
+                .build();
     }
 }
 

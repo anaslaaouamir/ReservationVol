@@ -2,6 +2,7 @@ package com.flight.reservationservice.web;
 
 import com.flight.reservationservice.entities.Paiement;
 import com.flight.reservationservice.entities.Reservation;
+import com.flight.reservationservice.models.Vol;
 import com.flight.reservationservice.repositories.PaiementRepository;
 import com.flight.reservationservice.repositories.ReservationRepository;
 import org.springframework.web.bind.annotation.*;
@@ -42,11 +43,14 @@ public class PaiementController {
     @PostMapping("/paiements/{id}")
     public void createPaiement(@RequestBody Paiement paiement, @PathVariable Long id) {
         Reservation reservation=reservationRepository.findById(id).get();
-            reservation.setStatut("Payé");
-            reservationRepository.save(reservation);
-            volOpenFeign.decrement(reservation.getIdVol());
-        paiement.setReservation(reservation);
-        paiementRepository.save(paiement);
+        Vol vol=volOpenFeign.findById(reservation.getIdVol());
+            if(vol.getPlacesDisponibles()>0){
+                reservation.setStatut("Payé");
+                reservationRepository.save(reservation);
+                volOpenFeign.decrement(reservation.getIdVol());
+                paiement.setReservation(reservation);
+                paiementRepository.save(paiement);
+            }
     }
 
 

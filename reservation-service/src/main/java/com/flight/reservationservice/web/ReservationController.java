@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 
@@ -67,12 +68,22 @@ public class ReservationController {
     }
 
     @DeleteMapping("reservations/{id}")
-    public void supprimerReservation(@PathVariable Long id){
-        Reservation reservation=reservationRepository.findById(id).get();
+    public void supprimerReservation(@PathVariable Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        reservationRepository.delete(reservation);
-        volOpenFeign.increment(reservation.getIdVol());
+        try {
+            if (Objects.equals(reservation.getStatut(), "Payé")) {
+                volOpenFeign.increment(reservation.getIdVol());
+            }
+            // Only delete the reservation if the increment succeeds
+            reservationRepository.delete(reservation);
+        } catch (Exception e) {
+            System.out.println("Failed to increment Vol: " + e.getMessage());
+            throw new RuntimeException("Deletion aborted because increment operation failed");
+        }
     }
+
 
     @GetMapping("/client_reservations/{id}")
     public List<Reservation> clientReservations(@PathVariable Long id) {
@@ -121,8 +132,7 @@ public class ReservationController {
         List<Reservation> reservations = reservationRepository.findAll();
         for (Reservation res : reservations) {
             if(res.getIdVol().equals(id)){
-                reservationRepository.delete(res);
-                volOpenFeign.increment(res.getIdVol());
+                supprimerReservation(res.getIdReservation());
             }
         }
     }
@@ -133,8 +143,7 @@ public class ReservationController {
         List<Reservation> reservations = reservationRepository.findAll();
         for (Reservation res : reservations) {
             if(res.getIdClient().equals(id)){
-                reservationRepository.delete(res);
-                volOpenFeign.increment(res.getIdVol());
+                supprimerReservation(res.getIdReservation());
             }
         }
     }

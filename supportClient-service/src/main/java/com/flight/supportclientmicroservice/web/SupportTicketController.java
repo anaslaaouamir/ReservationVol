@@ -11,15 +11,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 
 public class SupportTicketController {
 
+
     public SupportTicketController(SupportTicketRepository supportTicketRepository, ClientOpenFeign clientOpenFeign, TicketMessageRepository ticketMessageRepository) {
         this.clientOpenFeign = clientOpenFeign;
         this.supportTicketRepository = supportTicketRepository;
         this.ticketMessageRepository = ticketMessageRepository;
+
     }
 
     private ClientOpenFeign clientOpenFeign;
