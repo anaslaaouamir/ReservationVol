@@ -1,1 +1,108 @@
-<p>vols works!</p>
+<div class="container">
+  <div class="header">
+    <h2>Gestion des vols</h2>
+    <button pButton type="button" label="Add Vol" icon="pi pi-plus" class="p-button-success" (click)="showDialogToAdd()"></button>
+  </div>
+
+  <!-- Table des vols -->
+  <p-table #dt [value]="vols" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['nameVol','companyName','villeDepart','villeDestination','heureDepart','heureArrivee','prix','placesDisponibles','statut']">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nameVol">Name <p-sortIcon field="nameVol"></p-sortIcon></th>
+        <th pSortableColumn="companyName">Company <p-sortIcon field="companyName"></p-sortIcon></th>
+        <th pSortableColumn="villeDepart">Departure City <p-sortIcon field="villeDepart"></p-sortIcon></th>
+        <th pSortableColumn="villeDestination">Destination City <p-sortIcon field="villeDestination"></p-sortIcon></th>
+        <th pSortableColumn="heureDepart">Departure Time <p-sortIcon field="heureDepart"></p-sortIcon></th>
+        <th pSortableColumn="heureArrivee">Arrival Time <p-sortIcon field="heureArrivee"></p-sortIcon></th>
+        <th pSortableColumn="prix">Price <p-sortIcon field="prix"></p-sortIcon></th>
+        <th pSortableColumn="placesDisponibles">Available Seats <p-sortIcon field="placesDisponibles"></p-sortIcon></th>
+        <th pSortableColumn="statut">Status <p-sortIcon field="statut"></p-sortIcon></th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <th><input pInputText type="text" (input)="applyFilter($event, 'nameVol')" placeholder="Search by Name" class="p-column-filter"></th>
+        <th><input pInputText type="text" (input)="applyFilter($event, 'companyName')" placeholder="Search by Company" class="p-column-filter"></th>
+        <th><input pInputText type="text" (input)="applyFilter($event, 'villeDepart')" placeholder="Search by Departure City" class="p-column-filter"></th>
+        <th><input pInputText type="text" (input)="applyFilter($event, 'villeDestination')" placeholder="Search by Destination City" class="p-column-filter"></th>
+        <th><input pInputText type="text" (input)="applyFilter($event, 'heureDepart')" placeholder="Search by Departure Time" class="p-column-filter"></th>
+        <th><input pInputText type="text" (input)="applyFilter($event, 'heureArrivee')" placeholder="Search by Arrival Time" class="p-column-filter"></th>
+        <th><input pInputText type="text" (input)="applyFilter($event, 'prix')" placeholder="Search by Price" class="p-column-filter"></th>
+        <th><input pInputText type="text" (input)="applyFilter($event, 'placesDisponibles')" placeholder="Search by Available Seats" class="p-column-filter"></th>
+        <th><input pInputText type="text" (input)="applyFilter($event, 'statut')" placeholder="Search by Status" class="p-column-filter"></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-vol>
+      <tr>
+        <td>{{vol.nameVol}}</td>
+        <td>{{vol.companyName}}</td>
+        <td>{{vol.villeDepart}}</td>
+        <td>{{vol.villeDestination}}</td>
+        <td>{{vol.heureDepart}}</td>
+        <td>{{vol.heureArrivee}}</td>
+        <td>{{vol.prix}}</td>
+        <td>{{vol.placesDisponibles}}</td>
+        <td>{{vol.statut}}</td>
+        <td>
+          <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success" (click)="editVol(vol)"></button>
+          <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVol(vol)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Dialog pour ajouter/modifier un vol -->
+  <p-dialog [(visible)]="displayDialog" [modal]="true" [closable]="false" [style]="{width: '500px'}">
+    <ng-template pTemplate="header">
+      <h3>{{ isEditMode ? 'Edit Vol' : 'Add Vol' }}</h3>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <form [formGroup]="volForm">
+        <div class="p-fluid">
+          <div class="p-field">
+            <label for="nameVol">Name</label>
+            <input id="nameVol" type="text" pInputText formControlName="nameVol" />
+          </div>
+          <div class="p-field">
+            <label for="companyName">Company</label>
+            <input id="companyName" type="text" pInputText formControlName="companyName" />
+          </div>
+          <div class="p-field">
+            <label for="villeDepart">Departure City</label>
+            <input id="villeDepart" type="text" pInputText formControlName="villeDepart" />
+          </div>
+          <div class="p-field">
+            <label for="villeDestination">Destination City</label>
+            <input id="villeDestination" type="text" pInputText formControlName="villeDestination" />
+          </div>
+          <div class="p-field">
+            <label for="heureDepart">Departure Time</label>
+            <input id="heureDepart" type="time" pInputText formControlName="heureDepart" />
+          </div>
+          <div class="p-field">
+            <label for="heureArrivee">Arrival Time</label>
+            <input id="heureArrivee" type="time" pInputText formControlName="heureArrivee" />
+          </div>
+          <div class="p-field">
+            <label for="prix">Price</label>
+            <input id="prix" type="number" pInputText formControlName="prix" />
+          </div>
+          <div class="p-field">
+            <label for="placesDisponibles">Available Seats</label>
+            <input id="placesDisponibles" type="number" pInputText formControlName="placesDisponibles" />
+          </div>
+          <div class="p-field">
+            <label for="statut">Status</label>
+            <input id="statut" type="text" pInputText formControlName="statut" />
+          </div>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-secondary" (click)="displayDialog = false"></button>
+      <button pButton type="button" label="Save" icon="pi pi-check" class="p-button-primary" (click)="saveVol()"></button>
+    </ng-template>
+  </p-dialog>
+</div>

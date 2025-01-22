@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: OfferSearchComponent },
   { path: 'detail/:id', component: OfferDetailComponent },
   { path: 'search', component: OfferSearchComponent },
-  { path: 'list-vol', component: OfferListComponent}
+  { path: 'list-vol', component: OfferListComponent }
 ];
 
 @NgModule({

@@ -13,6 +13,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {ToolbarModule} from "primeng/toolbar";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 
 
@@ -34,6 +35,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     ConfirmDialogModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule
   ],
   providers: [MessageService,ConfirmationService]
 })
