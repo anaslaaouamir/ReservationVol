@@ -1,0 +1,22 @@
+<div class="client-container">
+  <!-- Table des clients -->
+  <table border="1" width="100%" cellpadding="10">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Téléphone</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{ client.nom }}</td>
+      <td>{{ client.email }}</td>
+      <td>{{ client.telephone }}</td>
+
+    </tr>
+    </tbody>
+  </table>
+
+</div>
