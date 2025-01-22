@@ -13,7 +13,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
-import {BookingService} from "./booking.service";
+import {BookingService} from "../../services/booking.service";
 import { DialogModule } from 'primeng/dialog';
 import {ConfirmationService, MessageService} from "primeng/api";
 import {authGuard} from "../../core/auth.guard";

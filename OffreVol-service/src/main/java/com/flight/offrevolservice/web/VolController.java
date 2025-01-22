@@ -3,6 +3,7 @@ package com.flight.offrevolservice.web;
 import com.flight.offrevolservice.entities.Vol;
 import com.flight.offrevolservice.repositories.VolRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -34,19 +35,22 @@ public class VolController {
         return (Vol) volRepository.findById(id).get();
     }
 
-    @PostMapping("/vols")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/vols-add")
     public void createVol(@RequestBody Vol vol) {
         volRepository.save(vol);
     }
 
-    @DeleteMapping("/vols/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @DeleteMapping("/vols-delete/{id}")
     public void deleteVol(@PathVariable Long id) {
         Vol vol= volRepository.findById(id).get();
         reservationOpenFeign.supprimerReservationVol(id);
         volRepository.delete(vol);
     }
 
-    @PutMapping("/vols/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/vols-update/{id}")
     public void updateVol(@PathVariable Long id, @RequestBody Vol vol) {
         Vol vol1=(Vol) volRepository.findById(id).get();
         BeanUtils.copyProperties(vol,vol1);

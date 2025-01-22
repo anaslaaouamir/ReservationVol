@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OfferService } from '../offer.service';
+import { OfferService } from '../../../services/offer.service';
 import { Vol, SearchVolCriteria } from 'src/app/models/vol.model';
 import {HttpClient} from "@angular/common/http";
 

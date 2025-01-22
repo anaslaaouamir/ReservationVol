@@ -1,0 +1,79 @@
+<div class="card">
+  <p-toast></p-toast>
+
+  <p-toolbar styleClass="mb-4">
+    <div class="p-toolbar-group-start">
+      <button pButton label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+    </div>
+    <div class="p-toolbar-group-end">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" placeholder="Rechercher..." (input)="onSearch($event)"/>
+          </span>
+    </div>
+  </p-toolbar>
+
+  <p-table
+    [value]="clients"
+    [rows]="10"
+    [paginator]="true"
+    responsiveLayout="scroll"
+    [globalFilterFields]="['nom','email','telephone']"
+    [rowHover]="true"
+    [rows]="10"
+    dataKey="idClient"
+    currentPageReportTemplate="Affichage {first} à {last} sur {totalRecords} clients"
+    [showCurrentPageReport]="true">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-client>
+      <tr>
+        <td>{{client.nom}}</td>
+        <td>{{client.email}}</td>
+        <td>{{client.telephone}}</td>
+        <td>
+          <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editClient(client)"></button>
+          <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteClient(client)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog [(visible)]="clientDialog" [style]="{width: '450px'}" header="Détails Client" [modal]="true" styleClass="p-fluid">
+    <form [formGroup]="clientForm">
+      <div class="field">
+        <label for="nom">Nom</label>
+        <input type="text" pInputText id="nom" formControlName="nom" required autofocus />
+        <small class="p-error" *ngIf="clientForm.get('nom')?.invalid && clientForm.get('nom')?.touched">Le nom est requis.</small>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" pInputText id="email" formControlName="email" required />
+        <small class="p-error" *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched">Email invalide.</small>
+      </div>
+      <div class="field">
+        <label for="motPasse">Mot de passe</label>
+        <input type="password" pInputText id="motPasse" formControlName="motPasse" required />
+        <small class="p-error" *ngIf="clientForm.get('motPasse')?.invalid && clientForm.get('motPasse')?.touched">Le mot de passe est requis.</small>
+      </div>
+      <div class="field">
+        <label for="telephone">Téléphone</label>
+        <input type="text" pInputText id="telephone" formControlName="telephone" required />
+        <small class="p-error" *ngIf="clientForm.get('telephone')?.invalid && clientForm.get('telephone')?.touched">Le téléphone est requis.</small>
+      </div>
+    </form>
+    <ng-template pTemplate="footer">
+      <button pButton label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton label="Sauvegarder" icon="pi pi-check" class="p-button-text" (click)="saveClient()"></button>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+</div>
