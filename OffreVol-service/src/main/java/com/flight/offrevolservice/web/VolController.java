@@ -36,13 +36,13 @@ public class VolController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/vols-add")
+    @PostMapping("/vols")
     public void createVol(@RequestBody Vol vol) {
         volRepository.save(vol);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/vols-delete/{id}")
+    @DeleteMapping("/vols/{id}")
     public void deleteVol(@PathVariable Long id) {
         Vol vol= volRepository.findById(id).get();
         reservationOpenFeign.supprimerReservationVol(id);

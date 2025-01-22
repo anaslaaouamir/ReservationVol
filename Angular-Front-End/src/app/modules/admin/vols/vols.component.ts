@@ -60,30 +60,48 @@ export class VolsComponent  implements OnInit {
   }
 
   saveVol(): void {
-    if (!this.volForm.valid) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Form is invalid!' });
-      return;
-    }
+    if (this.volForm.valid) {
+      const vol: Vol = this.volForm.value;
 
-    const vol: Vol = this.volForm.value;
+      // Vérification si les valeurs de date sont valides
+      if (vol.heureDepart) {
+        vol.heureDepart = new Date(vol.heureDepart).toISOString();
+      } else {
+        console.error('Heure de départ invalide');
+      }
 
-    if (this.isEditMode) {
-      this.volService.updateVol(vol).subscribe(() => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vol updated' });
-        this.loadVols();
-        this.displayDialog = false;
-      });
-    } else {
-      this.volService.addVol(vol).subscribe(() => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vol added' });
-        this.loadVols(); // Recharge les vols après ajout
-        this.displayDialog = false;
-      }, (error) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add vol!' });
-        console.error(error); // Debuggez l'erreur
-      });
+      if (vol.heureArrivee) {
+        vol.heureArrivee = new Date(vol.heureArrivee).toISOString();
+      } else {
+        console.error('Heure d\'arrivée invalide');
+      }
+
+      console.log('Données envoyées au backend :', vol); // Debug
+
+      if (this.isEditMode) {
+        this.volService.updateVol(vol).subscribe(
+          () => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vol updated' });
+            this.loadVols();
+            this.displayDialog = false;
+          },
+          error => console.error('Erreur lors de la mise à jour du vol :', error)
+        );
+      } else {
+        this.volService.addVol(vol).subscribe(
+          () => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vol added' });
+            this.loadVols();
+            this.displayDialog = false;
+          },
+          error => console.error('Erreur lors de l’ajout du vol :', error)
+        );
+      }
     }
   }
+
+
+
 
 
   editVol(vol: Vol): void {
@@ -92,7 +110,8 @@ export class VolsComponent  implements OnInit {
     this.displayDialog = true;
   }
 
-  deleteVol(vol: Vol): void {
+/*  deleteVols(vol: Vol): void {
+    console.error('Heure de départ invalide');
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this vol?',
       header: 'Confirm',
@@ -104,7 +123,20 @@ export class VolsComponent  implements OnInit {
         });
       }
     });
-  }
+  }*/
+
+
+
+  deleteVols(vol: Vol): void {
+        this.volService.deleteVol(vol.idVol).subscribe(() => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vol deleted' });
+          this.loadVols();
+        });
+      }
+
+
+
+
 
   applyFilter(event: Event, field: string): void {
     const inputElement = event.target as HTMLInputElement;

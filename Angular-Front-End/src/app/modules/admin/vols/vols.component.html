@@ -5,19 +5,19 @@
   </div>
 
   <!-- Table des vols -->
-  <p-table #dt [value]="vols" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['nameVol','companyName','villeDepart','villeDestination','heureDepart','heureArrivee','prix','placesDisponibles','statut']">
+  <p-table #dt [value]="vols" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['nameVol','companyName','villeDepart','villeDestination','heureDepart','heureArrivee','prix','placesDisponibles','statut']" class="p-datatable-sm">
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="nameVol">Name <p-sortIcon field="nameVol"></p-sortIcon></th>
-        <th pSortableColumn="companyName">Company <p-sortIcon field="companyName"></p-sortIcon></th>
-        <th pSortableColumn="villeDepart">Departure City <p-sortIcon field="villeDepart"></p-sortIcon></th>
-        <th pSortableColumn="villeDestination">Destination City <p-sortIcon field="villeDestination"></p-sortIcon></th>
-        <th pSortableColumn="heureDepart">Departure Time <p-sortIcon field="heureDepart"></p-sortIcon></th>
-        <th pSortableColumn="heureArrivee">Arrival Time <p-sortIcon field="heureArrivee"></p-sortIcon></th>
-        <th pSortableColumn="prix">Price <p-sortIcon field="prix"></p-sortIcon></th>
-        <th pSortableColumn="placesDisponibles">Available Seats <p-sortIcon field="placesDisponibles"></p-sortIcon></th>
-        <th pSortableColumn="statut">Status <p-sortIcon field="statut"></p-sortIcon></th>
-        <th>Actions</th>
+        <th style="width: 100px;" pSortableColumn="nameVol">Name <p-sortIcon field="nameVol"></p-sortIcon></th>
+        <th style="width: 100px;" pSortableColumn="companyName">Company <p-sortIcon field="companyName"></p-sortIcon></th>
+        <th style="width: 100px;" pSortableColumn="villeDepart">Departure City <p-sortIcon field="villeDepart"></p-sortIcon></th>
+        <th style="width: 100px;" pSortableColumn="villeDestination">Destination City <p-sortIcon field="villeDestination"></p-sortIcon></th>
+        <th style="width: 120px;" pSortableColumn="heureDepart">Departure Time <p-sortIcon field="heureDepart"></p-sortIcon></th>
+        <th style="width: 120px;" pSortableColumn="heureArrivee">Arrival Time <p-sortIcon field="heureArrivee"></p-sortIcon></th>
+        <th style="width: 80px;" pSortableColumn="prix">Price <p-sortIcon field="prix"></p-sortIcon></th>
+        <th style="width: 100px;" pSortableColumn="placesDisponibles">Available Seats <p-sortIcon field="placesDisponibles"></p-sortIcon></th>
+        <th style="width: 80px;" pSortableColumn="statut">Status <p-sortIcon field="statut"></p-sortIcon></th>
+        <th style="width: 100px;">Actions</th>
       </tr>
       <tr>
         <th><input pInputText type="text" (input)="applyFilter($event, 'nameVol')" placeholder="Search by Name" class="p-column-filter"></th>
@@ -45,7 +45,7 @@
         <td>{{vol.statut}}</td>
         <td>
           <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success" (click)="editVol(vol)"></button>
-          <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVol(vol)"></button>
+          <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteVols(vol)"></button>
         </td>
       </tr>
     </ng-template>
@@ -78,11 +78,11 @@
           </div>
           <div class="p-field">
             <label for="heureDepart">Departure Time</label>
-            <input id="heureDepart" type="time" pInputText formControlName="heureDepart" />
+            <p-calendar id="heureDepart" [showTime]="true" [hourFormat]="'24'" formControlName="heureDepart"></p-calendar>
           </div>
           <div class="p-field">
             <label for="heureArrivee">Arrival Time</label>
-            <input id="heureArrivee" type="time" pInputText formControlName="heureArrivee" />
+            <p-calendar id="heureArrivee" [showTime]="true" [hourFormat]="'24'" formControlName="heureArrivee"></p-calendar>
           </div>
           <div class="p-field">
             <label for="prix">Price</label>

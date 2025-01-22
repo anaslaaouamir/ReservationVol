@@ -14,6 +14,7 @@ import {ToolbarModule} from "primeng/toolbar";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {CalendarModule} from "primeng/calendar";
 
 
 
@@ -35,7 +36,8 @@ import {HttpClientModule} from "@angular/common/http";
     ConfirmDialogModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CalendarModule
   ],
   providers: [MessageService,ConfirmationService]
 })

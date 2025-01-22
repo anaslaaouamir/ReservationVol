@@ -20,12 +20,14 @@ export class OfferService {
   }
 
   updateVol(vol: Vol): Observable<Vol> {
-    return this.http.put<Vol>(`${this.apiUrl}/${vol.idVol}`, vol);
+    return this.http.put<Vol>(`${this.apiUrl}/vols-update/${vol.idVol}`, vol); // Correct
   }
 
+
   deleteVol(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/vols-delete/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/vols/${id}`);
   }
+
 
   chercherVol(villeDepart: string, villeDestination: string, day: number, month: number, year: number): Observable<any[]> {
     const url = `${this.apiUrl}/ClientChercherVol?villeDepart=${villeDepart}&villeDestination=${villeDestination}&day=${day}&month=${month}&year=${year}`;

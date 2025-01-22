@@ -1,0 +1,30 @@
+/* Styles pour la table */
+.p-table {
+  font-size: 12px;
+}
+
+.p-table td, .p-table th {
+  padding: 4px 8px;
+}
+
+/* Styles pour les boutons */
+.p-button {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+/* Styles pour le paginateur */
+.p-paginator {
+  padding: 4px;
+}
+
+/* Styles pour les lignes de la table */
+.p-table .p-datatable-tbody > tr {
+  height: 30px;
+}
+
+/* Styles pour les filtres */
+.p-column-filter {
+  width: 100%;
+  font-size: 12px;
+}
