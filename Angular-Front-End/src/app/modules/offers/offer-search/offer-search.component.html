@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Rechercher un Vol</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+</head>
+
+<body>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">Rechercher un Vol</h3>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="chercherVols()">
+          <div class="form-group">
+              <div class="form-checkbox">
+                <label for="roundtrip">
+                  <input type="radio" id="roundtrip" name="flight-type">
+                  <span></span>Aller-retour
+                </label>
+                <label for="one-way">
+                  <input type="radio" id="one-way" name="flight-type">
+                  <span></span>Aller simple
+                </label>
+                <label for="multi-city">
+                  <input type="radio" id="multi-city" name="flight-type">
+                  <span></span>Multi-Villes
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="villeDepart" class="form-label">Ville de départ</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="villeDepart"
+                    name="villeDepart"
+                    [(ngModel)]="villeDepart"
+                    placeholder="Entrez la ville de départ">
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="villeDestination" class="form-label">Ville de destination</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="villeDestination"
+                    name="villeDestination"
+                    [(ngModel)]="villeDestination"
+                    placeholder="Entrez la ville de destination">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="dateDepart" class="form-label">Date de départ</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="dateDepart"
+                    name="dateDepart"
+                    [(ngModel)]="date"
+                    >
+
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <div class="form-group">
+                  <label for="dateRetour" class="form-label">Date de retour</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="dateRetour"
+                    name="dateRetour"
+                  >
+                </div>
+              </div>
+            </div>
+
+
+            <div class="d-grid gap-2">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg"
+                >
+                <i class="fas fa-search me-2"></i>
+                Rechercher des vols
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

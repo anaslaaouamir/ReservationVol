@@ -1,0 +1,31 @@
+.status-badge {
+  padding: .25rem .5rem;
+  border-radius: 3px;
+  font-weight: bold;
+}
+.status-confirmé { background-color: #C8E6C9; color: #256029; }
+.status-attente { background-color: #FEEDAF; color: #8A5340; }
+.status-annulé { background-color: #FFCDD2; color: #C63737; }
+
+:host ::ng-deep .p-datatable-responsive .p-datatable-tbody > tr > td .p-column-title {
+  display: none;
+}
+
+@media screen and (max-width: 40rem) {
+  :host ::ng-deep .p-datatable.p-datatable-responsive .p-datatable-tbody > tr > td {
+    text-align: left;
+    display: block;
+    width: 100%;
+    float: left;
+    clear: left;
+    border: 0 none;
+  }
+
+  :host ::ng-deep .p-datatable.p-datatable-responsive .p-datatable-tbody > tr > td .p-column-title {
+    padding: .4rem;
+    min-width: 30%;
+    display: inline-block;
+    margin: -.4rem 1rem -.4rem -.4rem;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Form-v6 by Colorlib</title>
+  <!-- Mobile Specific Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+</head>
+
+
+<body class="img js-fullheight form-v6" style="background-image: url(/assets/img/background.jpg);">
+
+<div class="page-content">
+  <div class="form-v6-content">
+    <div class="form-left">
+      <img src="assets/img/register.jpg" alt="form">
+    </div>
+    <form class="form-detail" (ngSubmit)="onSubmit()">
+      <h2>Sign in</h2>
+      <div class="form-row">
+        <table><tr>
+          <td><input type="text" name="full-name" id="full-name" [(ngModel)]="nom" class="input-text" placeholder="First Name" required></td>
+        </tr></table>
+
+      </div>
+      <div class="form-row">
+        <table><tr>
+          <td> <input type="text" name="your-email" id="your-email" [(ngModel)]="email" class="input-text" placeholder="Email Address" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+          </td>
+          <td> <input type="tel" name="your-email" id="tell" [(ngModel)]="telephone" class="input-text" placeholder="Phone Number" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+          </td>
+        </tr></table>
+        </div>
+      <div class="form-row">
+        <table>
+          <tr>
+            <td>
+              <input type="password" name="password" id="password" [(ngModel)]="motPasse" class="input-text" placeholder="Password" required>
+              <span class="toggle-password" onclick="togglePasswordVisibility('password', 'toggle-password')">
+          <i class="fa fa-eye" id="toggle-password"></i>
+        </span>
+            </td>
+            <td>
+              <input type="password" name="comfirm-password" id="comfirm-password" [(ngModel)]="motPasse" class="input-text" placeholder="Confirm Password" required>
+              <span class="toggle-password" onclick="togglePasswordVisibility('comfirm-password', 'toggle-confirm-password')">
+          <i class="fa fa-eye" id="toggle-confirm-password"></i>
+        </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="form-row-last">
+        <input type="submit" name="register" class="register" value="Register">
+      </div>
+    </form>
+  </div>
+</div>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
