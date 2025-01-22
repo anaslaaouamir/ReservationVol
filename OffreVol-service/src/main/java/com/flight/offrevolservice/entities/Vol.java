@@ -22,9 +22,13 @@ public class Vol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idVol;
 
+    private String nameVol;
+    private String CompanyName;
+
     private String villeDepart;
 
     private String villeDestination;
+
 
     private LocalDateTime heureDepart;
 

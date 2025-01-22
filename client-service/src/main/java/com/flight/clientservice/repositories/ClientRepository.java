@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
@@ -16,5 +17,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
             "LOWER(c.motPasse) LIKE LOWER(CONCAT('%', :recherche, '%')) OR " +
             "LOWER(c.telephone) LIKE LOWER(CONCAT('%', :recherche, '%')))")
     List<Client> searchClients(@Param("recherche") String recherche);
-
+    Optional<Client> findByEmail(String email);
 }
