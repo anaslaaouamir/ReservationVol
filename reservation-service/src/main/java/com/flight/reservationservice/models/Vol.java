@@ -14,6 +14,9 @@ public class Vol {
 
     private long idVol;
 
+
+    private String nameVol;
+    private String CompanyName;
     private String villeDepart;
 
     private String villeDestination;

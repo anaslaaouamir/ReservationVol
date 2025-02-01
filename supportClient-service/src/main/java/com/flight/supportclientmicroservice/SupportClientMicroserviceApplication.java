@@ -7,6 +7,7 @@ import com.flight.supportclientmicroservice.repositories.TicketMessageRepository
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -16,7 +17,6 @@ import java.time.LocalDateTime;
 @SpringBootApplication
 @EnableFeignClients
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-
 
 public class SupportClientMicroserviceApplication {
 
@@ -33,7 +33,7 @@ public class SupportClientMicroserviceApplication {
                     .statut("Opened")
                     .dateCreation(LocalDateTime.now())
                     .dateMiseAJour(LocalDateTime.now())
-                    .idClient(1L)
+                    .idClient(4L)
                     .build();
 
             supportTicketRepository.save(st);

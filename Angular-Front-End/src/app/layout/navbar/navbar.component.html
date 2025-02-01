@@ -1,0 +1,53 @@
+<div class="site-navbar-wrap">
+  <div class="site-navbar-top">
+    <div class="container py-3">
+      <div class="row align-items-center">
+        <div class="col-6">
+          <div class="d-flex mr-auto">
+            <a href="#" class="d-flex align-items-center mr-4">
+              <span class="icon-envelope mr-2"></span>
+              <span class="d-none d-md-inline-block">info@domain.com</span>
+            </a>
+            <a href="#" class="d-flex align-items-center mr-auto">
+              <span class="icon-phone mr-2"></span>
+              <span class="d-none d-md-inline-block">+1 234 4567 8910</span>
+            </a>
+          </div>
+        </div>
+        <div class="col-6 text-right">
+          <div class="mr-auto">
+            <a routerLink="/auth/profile"  *ngIf="currentClient">Bienvenue, {{ currentClient.email}}</a>
+            <a (click)="logout()"  *ngIf="currentClient">Déconnexion</a>
+            <a style="color: #3b5998;" href="#" role="button"><i class="p-2 pl-0 fab fa-facebook-f fa-lg"></i></a>
+            <a style="color: #55acee;" href="#" role="button"><i class="p-2 pl-0 fab fa-twitter fa-lg"></i></a>
+            <a style="color: #dd4b39;" href="#" role="button"><i class="p-2 pl-0 fab fa-google fa-lg"></i></a>
+            <a style="color: #ac2bac;" href="#" role="button"><i class="p-2 pl-0 fab fa-instagram fa-lg"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-navbar site-navbar-target js-sticky-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-2">
+          <h1 class="my-0 site-logo"><a routerLink="/">IDLD Travels</a></h1>
+        </div>
+        <div class="col-10">
+          <nav class="site-navigation text-right">
+            <ul class="site-menu main-menu d-none d-lg-block">
+              <li class="active"><a routerLink="/home" class="nav-link">Home</a></li>
+              <li><a routerLink="/classes" class="nav-link">Classes</a></li>
+              <li><a routerLink="/about" class="nav-link">About</a></li>
+              <li><a routerLink="/events" class="nav-link">Events</a></li>
+              <li *ngIf="!currentClient"><a routerLink="/clients/register" class="nav-link">Sign up</a></li>
+              <li *ngIf="!currentClient"><a routerLink="/clients/login" class="nav-link">Log in</a></li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

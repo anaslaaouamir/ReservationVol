@@ -7,6 +7,8 @@ import com.flight.supportclientmicroservice.repositories.SupportTicketRepository
 import com.flight.supportclientmicroservice.repositories.TicketMessageRepository;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ public class SupportTicketController {
     private SupportTicketRepository supportTicketRepository;
     private TicketMessageRepository ticketMessageRepository;
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/stickets")
     public List<SupportTicket> allSupportTickets() {
         List<SupportTicket> supportTickets = supportTicketRepository.findAll();
@@ -42,6 +46,7 @@ public class SupportTicketController {
         return my_supportTickets;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @GetMapping("/stickets/{id}")
     public SupportTicket uneRservation(@PathVariable Long id) {
         SupportTicket res = supportTicketRepository.findById(id).get();
@@ -50,19 +55,21 @@ public class SupportTicketController {
         return res;
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @PostMapping("/stickets")
     public void ajouterSupportTicket(@RequestBody SupportTicket supportTicket) {
         supportTicket.setStatut("Opened");
         supportTicketRepository.save(supportTicket);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @GetMapping("/ticket_message/{id_ticket}")
     public List<TicketMessage> getTicketMessages(@PathVariable Long id_ticket) {
         SupportTicket st = supportTicketRepository.findById(id_ticket).get();
         return st.getMessages();
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @PostMapping("/ticket_message/{id_ticket}")
     public void ajouterMessage(@PathVariable Long id_ticket, @RequestBody TicketMessage ticketMessage) {
         SupportTicket st = supportTicketRepository.findById(id_ticket).get();
@@ -70,17 +77,24 @@ public class SupportTicketController {
         ticketMessageRepository.save(ticketMessage);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/stickets/{id}")
-    public void supprimerTicket(@PathVariable Long id) {
-        SupportTicket st = supportTicketRepository.findById(id).get();
-        supportTicketRepository.delete(st);
+    public ResponseEntity<?> supprimerTicket(@PathVariable Long id) {
+        return supportTicketRepository.findById(id)
+                .map(ticket -> {
+                    supportTicketRepository.delete(ticket);
+                    return ResponseEntity.ok().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @DeleteMapping("/ticketMessage/{id}")
     public void supprimerTicketMessage(@PathVariable Long id) {
         ticketMessageRepository.delete(ticketMessageRepository.findById(id).get());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/stickets/{id}")
     public void ticketSolved(@PathVariable Long id) {
         SupportTicket st = supportTicketRepository.findById(id).get();

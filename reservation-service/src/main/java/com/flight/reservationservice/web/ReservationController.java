@@ -7,6 +7,7 @@ import com.flight.reservationservice.models.Vol;
 import com.flight.reservationservice.repositories.PaiementRepository;
 import com.flight.reservationservice.repositories.ReservationRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class ReservationController {
     private final ClientOpenFeign clientOpenFeign;
     private final VolOpenFeign volOpenFeign;
 
+    @PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
     @GetMapping("/reservations/{id}")
     public Reservation uneRservation(@PathVariable Long id) {
         Reservation res = reservationRepository.findById(id).get();
@@ -40,6 +42,7 @@ public class ReservationController {
         return res;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/reservations")
     public List<Reservation> allReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
@@ -55,6 +58,7 @@ public class ReservationController {
         return ress;
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @PostMapping("reservations")
     public void ajouterReservation(@RequestBody Reservation reservation) {
         Vol vol= volOpenFeign.findById(reservation.getIdVol());
@@ -67,6 +71,7 @@ public class ReservationController {
          }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("reservations/{id}")
     public void supprimerReservation(@PathVariable Long id) {
         Reservation reservation = reservationRepository.findById(id)
@@ -84,7 +89,7 @@ public class ReservationController {
         }
     }
 
-
+    @PreAuthorize("hasAnyRole('CLIENT','ADMIN')")
     @GetMapping("/client_reservations/{id}")
     public List<Reservation> clientReservations(@PathVariable Long id) {
         List<Reservation> reservations = reservationRepository.findAll();
@@ -102,6 +107,7 @@ public class ReservationController {
         return ress;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/vol_reservations/{id}")
     public List<Reservation> volReservations(@PathVariable Long id) {
         List<Reservation> reservations = reservationRepository.findAll();
@@ -119,13 +125,16 @@ public class ReservationController {
         return ress;
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/reservations/{id}")
-    public void updateClient(@PathVariable Long id, @RequestBody Reservation reservation) {
+    public void updateResevation(@PathVariable Long id, @RequestBody Reservation reservation) {
         Reservation reservation1=reservationRepository.findById(id).get();
         BeanUtils.copyProperties(reservation,reservation1);
         reservationRepository.save(reservation1);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("vol_reservations/{id}")
     public void supprimerReservationVol(@PathVariable Long id){
 
@@ -137,6 +146,7 @@ public class ReservationController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("client_reservations/{id}")
     public void supprimerReservationClient(@PathVariable Long id){
 
@@ -148,6 +158,7 @@ public class ReservationController {
         }
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/clientVolReserves/{idClient}")
     public List<Vol> clientVolReserves(@PathVariable Long idClient,@RequestParam(required = false) String villeDepart,
                                        @RequestParam(required = false) String villeDestination,

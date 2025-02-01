@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../core/auth.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -9,39 +10,26 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  isLoading: boolean = false;
-  errorMessage: string = '';
+  loginForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      motPasse: ['', Validators.required]
+    });
   }
 
-  onSubmit() {
-    if (!this.email || !this.password) {
-      this.errorMessage = 'Please enter both email and password';
-      return;
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const { email, motPasse } = this.loginForm.value;
+      this.authService.login(email, motPasse).subscribe({
+        next: () => this.router.navigate(['/clients/profile']),
+        error: err => console.error('Erreur de connexion:', err)
+      });
     }
-
-    this.isLoading = true;
-    this.errorMessage = '';
-
-    this.authService.login(this.email, this.password)
-      .pipe(
-        finalize(() => this.isLoading = false)
-      )
-      .subscribe(
-        () => {
-          this.authService.getUserProfile().subscribe(() => {
-            this.router.navigate(['/offers/search']);
-          });
-        },
-        (error) => {
-          this.errorMessage = error || 'Login failed. Please try again.';
-        }
-      );
   }
-  }
+}

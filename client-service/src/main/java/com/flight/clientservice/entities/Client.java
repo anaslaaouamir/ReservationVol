@@ -1,10 +1,9 @@
 package com.flight.clientservice.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,4 +22,6 @@ public class Client {
     private String email;
     private String motPasse;
     private String telephone;
+    @ElementCollection
+    private List<String> roles;
 }

@@ -5,12 +5,13 @@ body {
   background-position: center center; /* Centrer l'image */
   height: 100vh; /* Assure que le fond couvre la hauteur de la fenêtre */
   margin: 0; /* Supprime les marges par défaut */
-  overflow-x: hidden; /* Empêche le défilement horizontal */
+  overflow-x: hidden;
+  padding-top:100px;
 }
 
 .container {
   position: relative;
-  z-index: 1; /* Permet au contenu d'apparaître au-dessus du background */
+  z-index: 1;
 }
 
 .card {

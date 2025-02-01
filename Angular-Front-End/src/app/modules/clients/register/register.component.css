@@ -1,36 +1,32 @@
-body {
-  margin:  0;
-  background-color: #98c9ee;
+
+
+.register-container {
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 80px; /* Pour éviter que le formulaire ne soit caché derrière la navbar */
 }
 
-img{
-  width: 325px;
-  height: 465px;
-}
-
+/* Gardez les autres styles tels quels mais ajoutez ces modifications */
 .page-content {
   width: 90%;
-  margin:  0 auto;
+  margin: 0 auto;
   background-image: -moz-linear-gradient( 136deg, rgb(0,0,70) 0%, rgb(28,181,224) 100%);
   background-image: -webkit-linear-gradient( 136deg, rgb(0,0,70) 0%, rgb(28,181,224) 100%);
   background-image: -ms-linear-gradient( 136deg, rgb(0,0,70) 0%, rgb(28,181,224) 100%);
   display: flex;
-  display: -webkit-flex;
   justify-content: center;
-  -o-justify-content: center;
-  -ms-justify-content: center;
-  -moz-justify-content: center;
-  -webkit-justify-content: center;
   align-items: center;
-  -o-align-items: center;
-  -ms-align-items: center;
-  -moz-align-items: center;
-  -webkit-align-items: center;
+  min-height: calc(100vh - 80px); /* Ajustez selon la hauteur de votre navbar */
 }
+img{
+  width: 325px;
+  height: 425px;
+}
+
 .form-v6-content  {
   background: #fff;
   width: 850px;
-  height: 465px;
+  height: 425px;
   border-radius: 8px;
   -o-border-radius: 8px;
   -ms-border-radius: 8px;

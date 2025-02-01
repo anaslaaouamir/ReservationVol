@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class ClientServiceApplication {
 
 
     @Bean
-    CommandLineRunner init(ClientRepository clientRepository) {
+    CommandLineRunner init(ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            Client c1=Client.builder().nom("Anas").email("anas@gmail.com").telephone("0642900745").build();
+            Client c1=Client.builder().nom("Anas").email("anas@gmail.com").telephone("0642900745").motPasse(passwordEncoder.encode("1234")).roles(List.of("ROLE_ADMIN")).build();
             Client c2=Client.builder().nom("Mohammed").email("mohammed@gmail.com").telephone("0642900745").build();
             Client c3=Client.builder().nom("Youssef").email("youssef@gmail.com").telephone("0642900745").build();
 

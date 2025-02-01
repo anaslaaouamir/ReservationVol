@@ -5,8 +5,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"; 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {NavbarComponent} from "./layout/navbar/navbar.component";
+import {AuthInterceptor} from "./core/auth.interceptor";
 
 
 
@@ -38,7 +39,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     BrowserAnimationsModule
   ],
-  providers: [{provide : APP_INITIALIZER, useFactory : initializeKeycloak, multi :true, deps : [KeycloakService]}],
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{provide : APP_INITIALIZER, useFactory : initializeKeycloak, multi :true, deps : [KeycloakService]}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
