@@ -21,14 +21,14 @@ public class VolController {
     }
 
     // Accessible par le rôle ADMIN uniquement
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/vols")
     public List<Vol> vols() {
         return volRepository.findAll();
     }
 
     // Accessible par le rôle ADMIN uniquement
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @GetMapping("/vols/{id}")
     public Vol unVol(@PathVariable Long id) {
         return volRepository.findById(id).orElseThrow();

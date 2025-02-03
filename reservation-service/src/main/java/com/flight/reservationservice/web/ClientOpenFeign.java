@@ -2,6 +2,7 @@ package com.flight.reservationservice.web;
 
 import com.flight.reservationservice.models.Client;
 import com.flight.reservationservice.models.Vol;
+import com.flight.reservationservice.security.FeignClientConfig;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@FeignClient(name = "CLIENT-SERVICE")
+@FeignClient(name = "CLIENT-SERVICE", configuration = FeignClientConfig.class)
 public interface ClientOpenFeign {
 
     Cache<Long, Client> clientCache = Caffeine.newBuilder()

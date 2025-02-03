@@ -2,6 +2,7 @@ package com.flight.reservationservice.web;
 
 import com.flight.reservationservice.models.Client;
 import com.flight.reservationservice.models.Vol;
+import com.flight.reservationservice.security.FeignClientConfig;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@FeignClient(name = "OFFREVOL-SERVICE")
+@FeignClient(name = "OFFREVOL-SERVICE", configuration = FeignClientConfig.class)
 
 public interface VolOpenFeign {
 
