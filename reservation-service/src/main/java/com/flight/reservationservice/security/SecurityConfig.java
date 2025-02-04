@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .headers(h->h.frameOptions(fo->fo.disable()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/h2-console/**","/actuator/health").permitAll()
                         .anyRequest().authenticated()
                 )
 
