@@ -1,6 +1,7 @@
 package com.flight.supportclientmicroservice.web;
 
 import com.flight.supportclientmicroservice.models.Client;
+import com.flight.supportclientmicroservice.security.FeignClientConfig;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import feign.FeignException;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.concurrent.TimeUnit;
 
-@FeignClient(name = "CLIENT-SERVICE")
+@FeignClient(name = "CLIENT-SERVICE", configuration = FeignClientConfig.class)
 public interface ClientOpenFeign {
 
     // Cache instance for storing client data

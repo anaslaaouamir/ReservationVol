@@ -1,1 +1,151 @@
-<p>bookings works!</p>
+
+
+
+<div class="card" style="padding-top: 100px">
+  <nav class="p-menubar">
+    <ul>
+      <li><a routerLink="/admin-space/admin-tickets">Tickets</a></li>
+      <li><a routerLink="/admin-space/bookings">Réservations</a></li>
+      <li><a routerLink="/admin-space/clients">Clients</a></li>
+      <li><a routerLink="/admin-space/vols">Vols</a></li>
+    </ul>
+  </nav>
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+
+  <p-dialog header="Modifier la Réservation" [(visible)]="displayEditDialog"
+            [modal]="true" [style]="{ width: '50vw' }">
+    <div *ngIf="selectedReservation">
+      <div class="field">
+        <label for="numeroPlace">Numéro Place</label>
+        <input id="numeroPlace" pInputText [(ngModel)]="selectedReservation.numeroPlace" class="w-full" />
+      </div>
+
+      <div class="field">
+        <label for="statut">Statut</label>
+        <input pInputText [(ngModel)]="selectedReservation.statut" class="w-full" />
+      </div>
+
+      <div class="field">
+        <label>Date Réservation</label>
+        <p-calendar [(ngModel)]="selectedReservation.dateReservation" dateFormat="dd/mm/yy" class="w-full"></p-calendar>
+      </div>
+    </div>
+
+    <p-footer>
+      <button pButton label="Enregistrer" icon="pi pi-check" (click)="saveReservation()" class="p-button-success"></button>
+      <button pButton label="Annuler" icon="pi pi-times" (click)="displayEditDialog = false" class="p-button-secondary"></button>
+    </p-footer>
+  </p-dialog>
+
+  <!-- Filtres -->
+  <div class="grid mb-3">
+    <tr>
+      <td>
+        <div class="col-12 md:col-3">
+      <span class="p-float-label">
+        <input pInputText type="text" id="statut"
+               [(ngModel)]="filters.statut" class="w-full" />
+        <label for="statut">Filtrer par statut</label>
+      </span>
+      </div></td>
+      <td>
+        <div class="col-12 md:col-3">
+      <span class="p-float-label">
+        <p-calendar [(ngModel)]="filters.dateReservation"
+                    inputId="dateReservation" dateFormat="dd/mm/yy">
+        </p-calendar>
+        <label>Date de réservation</label>
+      </span>
+        </div></td>
+
+    </tr>
+      <td>
+        <div class="col-12 md:col-3">
+          <button pButton label="Rechercher" icon="pi pi-filter"
+                  (click)="applyFilter()" class="mr-2"></button>
+          <button pButton label="Réinitialiser" icon="pi pi-refresh"
+                  (click)="resetFilters()" severity="secondary"></button>
+        </div></td>
+
+
+
+
+</div>
+  <!-- Tableau des réservations -->
+  <p-table [value]="reservations" [loading]="loading"
+           [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Numéro Place</th>
+        <th>Date Réservation</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-reservation>
+      <tr>
+        <td>{{reservation.idReservation}}</td>
+        <td>{{reservation.numeroPlace}}</td>
+        <td>{{reservation.dateReservation | date:'dd/MM/yyyy'}}</td>
+        <td>{{reservation.statut}}</td>
+        <td>
+          <div class="flex gap-2">
+            <button pButton icon="pi pi-plane"
+                    (click)="showVolDetails(reservation)"
+                    class="p-button-info p-button-sm"
+                    title="Détails du vol"></button>
+            <button pButton icon="pi pi-user"
+                    (click)="showClientDetails(reservation)"
+                    class="p-button-success p-button-sm"
+                    title="Détails du client"></button>
+            <button pButton icon="pi pi-credit-card"
+                    (click)="showPaiementDetails(reservation)"
+                    class="p-button-warning p-button-sm"
+                    title="Détails du paiement"></button>
+            <button pButton icon="pi pi-pencil"
+                    (click)="editReservation(reservation)"
+                    class="p-button-primary p-button-sm"
+                    title="Éditer"></button>
+            <button pButton icon="pi pi-trash"
+                    (click)="deleteReservation(reservation)"
+                    class="p-button-danger p-button-sm"
+                    title="Supprimer"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Modals de détails -->
+  <p-dialog header="Détails du Vol" [(visible)]="displayVolDetails"
+            [modal]="true" [style]="dialogStyle">
+    <div *ngIf="selectedVol">
+      <p><strong>Nom du Vol:</strong> {{selectedVol.nameVol}}</p>
+      <p><strong>Départ:</strong> {{selectedVol.villeDepart}}</p>
+      <p><strong>Destination:</strong> {{selectedVol.villeDestination}}</p>
+      <p><strong>Heure de Départ:</strong> {{selectedVol.heureDepart | date:'dd/MM/yyyy HH:mm'}}</p>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Détails du Client" [(visible)]="displayClientDetails"
+            [modal]="true" [style]="dialogStyle">
+    <div *ngIf="selectedClient">
+      <p><strong>Nom:</strong> {{selectedClient.nom}}</p>
+      <p><strong>Prénom:</strong> {{selectedClient.prenom}}</p>
+      <p><strong>Email:</strong> {{selectedClient.email}}</p>
+      <p><strong>Téléphone:</strong> {{selectedClient.telephone}}</p>
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Détails du Paiement" [(visible)]="displayPaiementDetails"
+            [modal]="true" [style]="dialogStyle">
+    <div *ngIf="selectedPaiement">
+      <p><strong>Montant:</strong> {{selectedPaiement.montant}} €</p>
+      <p><strong>Méthode de Paiement:</strong> {{selectedPaiement.methodePaiement}}</p>
+      <p><strong>Date de Paiement:</strong> {{selectedPaiement.datePaiement | date:'dd/MM/yyyy HH:mm'}}</p>
+      <p><strong>Statut:</strong> {{selectedPaiement.statut}}</p>
+    </div>
+  </p-dialog>
+</div>

@@ -13,10 +13,12 @@
         <option value="$PROJECT_DIR$/x/pom.xml" />
         <option value="$PROJECT_DIR$/config-service/pom.xml" />
         <option value="$PROJECT_DIR$/supportClient-service/pom.xml" />
+        <option value="$PROJECT_DIR$/custom-user-storage-provider/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/custom-user-storage-provider/pom.xml" />
         <option value="$PROJECT_DIR$/x/pom.xml" />
       </set>
     </option>

@@ -1,1 +1,26 @@
-<p>booking-form works!</p>
+<div *ngIf="vol" class="container mt-4">
+  <h2>Détails de la réservation</h2>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3>Détails du vol</h3>
+      <p>Vol: {{vol.nameVol}}</p>
+      <p>Compagnie: {{vol.companyName}}</p>
+      <p>Départ: {{vol.villeDepart}} à {{vol.heureDepart}}</p>
+      <p>Arrivée: {{vol.villeDestination}} à {{vol.heureArrivee}}</p>
+      <p>Prix: {{vol.prix}} €</p>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3>Détails du client</h3>
+      <p>Nom: {{client.nom}}</p>
+      <p>Email: {{client.email}}</p>
+      <p>Téléphone: {{client.telephone}}</p>
+    </div>
+  </div>
+
+  <button class="btn btn-danger me-2" (click)="annuler()">Annuler</button>
+  <button class="btn btn-primary" (click)="passerAuPaiement()">Passer au paiement</button>
+</div>

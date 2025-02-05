@@ -1,0 +1,27 @@
+<body style="padding-top:110px">
+<div class="messages-container">
+  <div *ngIf="loading" class="text-center">Chargement des messages...</div>
+  <div *ngIf="!loading && errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+  <div *ngIf="!loading && messages.length === 0" class="text-center">
+    <p>Aucun message trouvé pour ce ticket.</p>
+  </div>
+
+  <div *ngIf="!loading && messages.length > 0">
+    <div class="card" *ngFor="let message of messages">
+      <div class="card-body">
+        <p><strong>Expéditeur:</strong> {{ message.sender }}</p>
+        <p><strong>Message:</strong> {{ message.content }}</p>
+        <p><strong>Date:</strong> {{ message.timestamp || 'N/A' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add message form -->
+  <div class="add-message-form">
+    <textarea [(ngModel)]="newMessageContent" placeholder="Écrire un message..." rows="1"></textarea>
+    <button class="btn btn-primary" (click)="sendMessage()">Envoyer</button>
+  </div>
+</div>
+</body>

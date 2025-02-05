@@ -5,12 +5,13 @@ import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { authGuard } from "../../core/auth.guard";
 import {ListComponent} from "./list/list.component";
+import {BilletComponent} from "./billet/billet.component";
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'list', component:ListComponent},
+  { path: 'billet', component:BilletComponent},
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
 ];
 

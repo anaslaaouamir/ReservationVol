@@ -1,1 +1,29 @@
-<p>ticket-list works!</p>
+<body style="padding-top:110px">
+<div class="ticket-container">
+  <div *ngIf="loading" class="text-center">Chargement des tickets...</div>
+  <div *ngIf="!loading && errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+  <div *ngIf="!loading && tickets.length === 0" class="text-center">
+    <p>Aucun ticket trouvé pour ce client.</p>
+  </div>
+
+  <div *ngIf="!loading && tickets.length > 0">
+    <div class="card" *ngFor="let ticket of tickets">
+      <div class="card-header">
+        <h4>{{ ticket.sujet }}</h4>
+      </div>
+      <div class="card-body">
+        <p><strong>Statut:</strong> {{ ticket.statut }}</p>
+        <p><strong>Date de Création:</strong> {{ ticket.dateCreation || 'N/A' }}</p>
+        <button class="btn btn-primary" (click)="viewMessages(ticket)">Voir les messages</button>
+        <button class="btn btn-primary" (click)="supprimerTicket(ticket)">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-success" (click)="addTicket()">Ajouter un nouveau ticket</button>
+  </div>
+</div>
+</body>

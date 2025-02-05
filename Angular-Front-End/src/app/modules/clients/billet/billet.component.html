@@ -1,0 +1,33 @@
+<body style="padding-top:110px">
+<div *ngIf="reservation" class="ticket-container" >
+  <div class="ticket-header">
+    <h3>{{ reservation.vol.companyName }}</h3>
+    <h4>Vol: {{ reservation.vol.nameVol }}</h4>
+  </div>
+  <div class="ticket-body">
+    <div class="ticket-section">
+      <p><strong>Nom:</strong> {{ reservation.client.nom }}</p>
+      <p><strong>Téléphone:</strong> {{ reservation.client.telephone }}</p>
+    </div>
+    <div class="ticket-section">
+      <p><strong>Départ:</strong> {{ reservation.vol.villeDepart }}</p>
+      <p><strong>Destination:</strong> {{ reservation.vol.villeDestination }}</p>
+    </div>
+    <div class="ticket-section">
+      <p><strong>Date du vol:</strong> {{ reservation.vol.heureDepart | date:'dd/MM/yyyy, HH:mm' }}</p>
+      <p><strong>Heure d'arrivée:</strong> {{ reservation.vol.heureArrivee | date:'dd/MM/yyyy, HH:mm' }}</p>
+    </div>
+    <div class="ticket-section">
+      <p><strong>Numéro de place:</strong> {{ reservation.numeroPlace }}</p>
+      <p><strong>Prix:</strong> {{ reservation.vol.prix }} MAD</p>
+    </div>
+    <div class="ticket-section">
+      <p><strong>Statut:</strong> {{ reservation.statut }}</p>
+      <p><strong>Méthode de paiement:</strong> {{ reservation.paiement?.methodePaiement || 'Non payé' }}</p>
+      <p><strong>Date de paiement:</strong> {{ reservation.paiement?.datePaiement | date:'dd/MM/yyyy, HH:mm' }}</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+</body>

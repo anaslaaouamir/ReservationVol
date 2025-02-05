@@ -1,0 +1,25 @@
+<body style="padding-top:110px">
+<div class="container">
+  <h2>Créer un nouveau ticket</h2>
+  <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="sujet">Sujet</label>
+      <input id="sujet" formControlName="sujet" class="form-control" />
+      <div *ngIf="ticketForm.get('sujet')?.invalid && ticketForm.get('sujet')?.touched" class="error">
+        Le sujet est requis.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" class="form-control"></textarea>
+      <div *ngIf="ticketForm.get('description')?.invalid && ticketForm.get('description')?.touched" class="error">
+        La description est requise.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="ticketForm.invalid">Créer</button>
+  </form>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</div>
+</body>

@@ -1,0 +1,28 @@
+<div *ngIf="reservation" style="padding-top:100px">
+  <h2>Paiement pour la réservation n° {{ reservation.idReservation }}</h2>
+  <p><strong>Prix :</strong> {{ reservation?.vol?.prix || 'Prix non disponible' }} MAD</p>
+
+
+
+  <form (ngSubmit)="effectuerPaiement()">
+    <tr> <label>Méthode de Paiement</label>
+      <select [(ngModel)]="paiement.methodePaiement" name="methodePaiement" required>
+        <option value="Carte Bancaire">Carte Bancaire</option>
+        <option value="Paypal">Paypal</option>
+        <option value="Virement">Virement</option>
+      </select></tr>
+
+    <tr>   <label>Numéro de Carte</label>
+      <input type="number" [(ngModel)]="paiement.numCarte" name="numCarte" required /></tr>
+    <tr><label>Nom du Porteur de Carte</label>
+      <input type="text" [(ngModel)]="paiement.nomPorteur" name="nomPorteur" required /></tr>
+
+
+
+
+
+    <tr><button type="submit">Effectuer le Paiement</button></tr>
+
+
+  </form>
+</div>

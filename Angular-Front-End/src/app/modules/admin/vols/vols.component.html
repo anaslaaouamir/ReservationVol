@@ -1,5 +1,14 @@
-<div class="container">
+<div class="container" style="padding-top:100px">
+  <nav class="p-menubar">
+    <ul>
+      <li><a routerLink="/admin-space/admin-tickets">Tickets</a></li>
+      <li><a routerLink="/admin-space/bookings">Réservations</a></li>
+      <li><a routerLink="/admin-space/clients">Clients</a></li>
+      <li><a routerLink="/admin-space/vols">Vols</a></li>
+    </ul>
+  </nav>
   <div class="header">
+
     <h2>Gestion des vols</h2>
     <button pButton type="button" label="Add Vol" icon="pi pi-plus" class="p-button-success" (click)="showDialogToAdd()"></button>
   </div>

@@ -3,6 +3,7 @@ package com.flight.offrevolservice.web;
 import com.flight.offrevolservice.entities.Vol;
 import com.flight.offrevolservice.repositories.VolRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +28,11 @@ public class VolController {
         return volRepository.findAll();
     }
 
-    // Accessible par le rôle ADMIN uniquement
     @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @GetMapping("/vols/{id}")
     public Vol unVol(@PathVariable Long id) {
-        return volRepository.findById(id).orElseThrow();
+        return volRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Vol introuvable avec l'ID : " + id));
+
     }
 
     // Accessible par le rôle ADMIN uniquement
@@ -69,7 +70,7 @@ public class VolController {
     }
 
     // Accessible par le rôle CLIENT uniquement
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/increment")
     public void increment(@PathVariable Long id) {
         Vol vol = volRepository.findById(id).orElseThrow();
@@ -77,8 +78,7 @@ public class VolController {
         volRepository.save(vol);
     }
 
-    // Accessible par le rôle CLIENT uniquement
-    @PreAuthorize("hasRole('CLIENT')")
+
     @GetMapping("/ClientChercherVol")
     public List<Vol> chercherVol(
             @RequestParam String villeDepart,

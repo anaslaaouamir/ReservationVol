@@ -8,13 +8,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { authGuard} from "../../core/auth.guard";
 import { ListComponent } from './list/list.component';
 import {MessageService} from "primeng/api";
+import { BilletComponent } from './billet/billet.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    ListComponent
+    ListComponent,
+    BilletComponent
   ],
   imports: [
     CommonModule,

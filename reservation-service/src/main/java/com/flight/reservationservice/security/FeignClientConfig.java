@@ -17,7 +17,6 @@ public class FeignClientConfig {
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
             try {
-                // 🔍 Récupérer le token directement depuis la requête HTTP entrante via RequestContextHolder
                 String token = extractJwtTokenFromRequest();
 
                 if (StringUtils.hasText(token)) {
@@ -31,10 +30,6 @@ public class FeignClientConfig {
             }
         };
     }
-
-    /**
-     * Méthode pour extraire le token JWT depuis l'en-tête Authorization de la requête HTTP actuelle.
-     */
     private String extractJwtTokenFromRequest() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {

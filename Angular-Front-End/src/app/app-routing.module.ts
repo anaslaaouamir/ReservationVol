@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from "./modules/clients/login/login.component";
+import {authGuard} from "./core/auth.guard";
+import {RoleGuard} from "./core/role.guard";
 
 const routes: Routes = [
   { path: '', redirectTo: 'offers/search', pathMatch: 'full' },
@@ -8,7 +10,10 @@ const routes: Routes = [
   { path: 'bookings', loadChildren: () => import('./modules/bookings/bookings.module').then(m => m.BookingsModule) },
   { path: 'clients', loadChildren: () => import('./modules/clients/clients.module').then(m => m.ClientsModule) },
   { path: 'support', loadChildren: () => import('./modules/support/support.module').then(m => m.SupportModule) },
-  { path: 'admin-space', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule) }
+  { path: 'admin-space',
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [authGuard, RoleGuard],
+    data: { role: 'ROLE_ADMIN' }  }
 ];
 
 @NgModule({

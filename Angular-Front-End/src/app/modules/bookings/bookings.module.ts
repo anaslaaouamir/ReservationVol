@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingListComponent } from './booking-list/booking-list.component';
-import { BookingDetailComponent } from './booking-detail/booking-detail.component';
+import { BookingPayementComponent } from './booking-payement/booking-payement.component';
 import { BookingFormComponent } from './booking-form/booking-form.component';
 import {BookingsRoutingModule} from "./bookings-routing.module";
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -16,18 +16,18 @@ import { DropdownModule } from 'primeng/dropdown';
 import {BookingService} from "../../services/booking.service";
 import { DialogModule } from 'primeng/dialog';
 import {ConfirmationService, MessageService} from "primeng/api";
-import {authGuard} from "../../core/auth.guard";
 
 @NgModule({
   declarations: [
     BookingListComponent,
-    BookingDetailComponent,
+    BookingPayementComponent,
     BookingFormComponent
   ],
   imports: [
     CommonModule,
     BookingsRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     TableModule,
     ButtonModule,
     RippleModule,

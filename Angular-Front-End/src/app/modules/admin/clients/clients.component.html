@@ -1,10 +1,18 @@
-<div class="card">
+
+<div class="head">
+</div>
+<div class="card" style="padding-top:100px">
+  <nav class="p-menubar">
+    <ul>
+      <li><a routerLink="/admin-space/admin-tickets">Tickets</a></li>
+      <li><a routerLink="/admin-space/bookings">Réservations</a></li>
+      <li><a routerLink="/admin-space/clients">Clients</a></li>
+      <li><a routerLink="/admin-space/vols">Vols</a></li>
+    </ul>
+  </nav>
   <p-toast></p-toast>
 
   <p-toolbar styleClass="mb-4">
-    <div class="p-toolbar-group-start">
-      <button pButton label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-    </div>
     <div class="p-toolbar-group-end">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>

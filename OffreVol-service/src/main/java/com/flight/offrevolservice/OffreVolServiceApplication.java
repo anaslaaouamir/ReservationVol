@@ -24,7 +24,7 @@ public class OffreVolServiceApplication {
     CommandLineRunner init(VolRepository volRepository) {
         return args -> {
 
-            Vol vol3 = Vol.builder()
+            /*Vol vol3 = Vol.builder()
                     .villeDepart("Marrakech")
                     .villeDestination("Madrid")
                     .CompanyName("RAYAN Air")
@@ -49,7 +49,7 @@ public class OffreVolServiceApplication {
                     .build();
 
 
-            volRepository.save(vol3);volRepository.save(vol8);
+            volRepository.save(vol3);volRepository.save(vol8);*/
 
 
             List<Vol> vols=volRepository.findAll();

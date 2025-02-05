@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { OfferService } from '../../../services/offer.service';
 import { Vol, SearchVolCriteria } from 'src/app/models/vol.model';
 import {HttpClient} from "@angular/common/http";
@@ -16,14 +16,16 @@ export class OfferListComponent implements OnInit {
   month!: number;
   year!: number;
 
-  flightResults: any[] = []; // Les résultats des vols retournés par le backend
+  flightResults: any[] = [];
   loading = true;
   errorMessage = '';
 
   constructor(
     private route: ActivatedRoute,
+    private router:Router,
     private offerService: OfferService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     // Récupérer les paramètres de recherche depuis l'URL
@@ -59,6 +61,8 @@ export class OfferListComponent implements OnInit {
   }
 
   selectFlight(flight: any): void {
-    alert(`Vous avez sélectionné le vol ${flight.numVol}`);
+    this.router.navigate(['/bookings/new'], {
+      queryParams: {idVol: flight.idVol}
+    });
   }
 }

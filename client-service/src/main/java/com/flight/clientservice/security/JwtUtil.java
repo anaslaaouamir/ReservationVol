@@ -36,14 +36,6 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String validateToken(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.getSubject();
-    }
 
     public Claims getClaimsFromToken(String token) {
         return Jwts.parserBuilder()

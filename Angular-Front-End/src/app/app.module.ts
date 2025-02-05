@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {NavbarComponent} from "./layout/navbar/navbar.component";
 import {AuthInterceptor} from "./core/auth.interceptor";
@@ -20,6 +19,12 @@ import {AuthInterceptor} from "./core/auth.interceptor";
     HttpClientModule,
     BrowserAnimationsModule
   ],
- bootstrap: [AppComponent]
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
+  exports: [
+    NavbarComponent
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

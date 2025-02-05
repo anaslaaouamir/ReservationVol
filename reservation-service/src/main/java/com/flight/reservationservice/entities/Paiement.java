@@ -24,6 +24,8 @@ public class Paiement {
     private Long montant;
 
     private String methodePaiement;
+    private Long numCarte;
+    private String nomPorteur;
 
     private LocalDateTime datePaiement;
 

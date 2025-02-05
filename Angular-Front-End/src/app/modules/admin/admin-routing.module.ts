@@ -4,13 +4,17 @@ import { authGuard } from "../../core/auth.guard";
 import {VolsComponent} from "./vols/vols.component";
 import {ClientsComponent} from "./clients/clients.component";
 import {BookingsComponent} from "./bookings/bookings.component";
-import {roleGuard} from "../../core/role.guard";
+import {SupportAdminComponent} from "./support-admin/support-admin.component"
+import {SupportAdminChatComponent} from "./support-admin-chat/support-admin-chat.component";
+
 
 
 const routes: Routes = [
-  { path: 'vols', component: VolsComponent , canActivate: [roleGuard], data:{roles: ["ADMIN"]}},
-  { path: 'clients', component: ClientsComponent , canActivate: [roleGuard], data:{roles: ["ADMIN"]}},
-  { path: 'bookings', component: BookingsComponent, canActivate: [roleGuard], data:{roles: ["ADMIN"]} },
+  { path: 'vols', component: VolsComponent },
+  { path: 'clients', component: ClientsComponent},
+  { path: 'bookings', component: BookingsComponent},
+  { path: 'admin-tickets', component: SupportAdminComponent },
+  { path: 'admin-tickets/:ticketId/messages', component: SupportAdminChatComponent }
 ];
 
 

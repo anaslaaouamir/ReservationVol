@@ -1,1 +1,64 @@
-<p>profile works!</p>
+<body style="padding-top: 110px">
+
+<nav class="p-menubar">
+  <ul>
+    <li><a routerLink="/support/client-tickets">Mes Tickets</a></li>
+  </ul>
+</nav>
+<div *ngIf="loading">Chargement...</div>
+<div *ngIf="!loading && !errorMessage" class="profile-container">
+  <div class="card">
+    <div class="card-header">Profil du Client</div>
+    <div class="card-body">
+      <form (ngSubmit)="updateClient()">
+        <div class="form-group">
+          <label for="nom">Nom:</label>
+          <input id="nom" [(ngModel)]="client.nom" name="nom" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input id="email" [(ngModel)]="client.email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telephone">Téléphone:</label>
+          <input id="telephone" [(ngModel)]="client.telephone" name="telephone" required>
+        </div>
+        <button type="submit" class="btn btn-success">Mettre à jour</button>
+      </form>
+      <button (click)="loadReservations()" class="btn">Voir les réservations</button>
+    </div>
+  </div>
+
+  <div *ngIf="showReservations" class="card">
+    <div class="card-header">Réservations</div>
+    <div class="card-body">
+      <table>
+        <thead>
+        <tr>
+          <th>Départ</th>
+          <th>Destination</th>
+          <th>Date du vol</th>
+          <th>Prix</th>
+          <th>Date de réservation</th>
+          <th>Numéro de place</th>
+          <th>Statut</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let reservation of reservations">
+          <td>{{ reservation.vol.villeDepart }}</td>
+          <td>{{ reservation.vol.villeDestination }}</td>
+          <td>{{ reservation.vol.heureDepart | date:'dd/MM/yyyy, HH:mm' }}</td>
+          <td>{{ reservation.vol.prix }} MAD</td>
+          <td>{{ reservation.dateReservation | date:'dd/MM/yyyy, HH:mm' }}</td>
+          <td>{{ reservation.numeroPlace }}</td>
+          <td>{{ reservation.statut }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="errorMessage">{{ errorMessage }}</div>
+</body>

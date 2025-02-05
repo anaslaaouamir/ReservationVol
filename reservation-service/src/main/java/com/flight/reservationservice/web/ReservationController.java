@@ -57,19 +57,23 @@ public class ReservationController {
         }
         return ress;
     }
-
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping("reservations")
-    public void ajouterReservation(@RequestBody Reservation reservation) {
-        Vol vol= volOpenFeign.findById(reservation.getIdVol());
-         if(vol.getPlacesDisponibles()>0){
-             reservation.setStatut("attend paiement");
-             reservationRepository.save(reservation);
-             //volOpenFeign.decrement(reservation.getIdVol());
-         }else {
+    public Reservation ajouterReservation(@RequestBody Reservation reservation) {
+        Vol vol = volOpenFeign.findById(reservation.getIdVol());
 
-         }
+        if (vol.getPlacesDisponibles() > 0) {
+            reservation.setStatut("attend paiement");
+
+            List<Reservation> reservations = reservationRepository.findByIdVol(reservation.getIdVol());
+            reservation.setNumeroPlace(reservations.size() + 1);
+
+            return reservationRepository.save(reservation);
+        } else {
+            throw new RuntimeException("Aucune place disponible pour ce vol.");
+        }
     }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("reservations/{id}")

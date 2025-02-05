@@ -1,22 +1,69 @@
-<div class="container mt-5">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <h2 class="mb-4">Connexion</h2>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" formControlName="email">
-      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
-        Email valide requis
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script>
+    (function($) {
+      "use strict";
+
+      var fullHeight = function() {
+        $('.js-fullheight').css('height', $(window).height());
+        $(window).resize(function(){
+          $('.js-fullheight').css('height', $(window).height());
+        });
+      };
+      fullHeight();
+
+      $(document).on("click", ".toggle-password", function() {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        input.attr("type", input.attr("type") === "password" ? "text" : "password");
+      });
+    })(jQuery);
+  </script>
+</head>
+<body class="img js-fullheight" style="background-image: url(/assets/img/background.jpg);">
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center mb-5">
+        <h2 class="heading-section">Login</h2>
       </div>
     </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Mot de passe</label>
-      <input type="password" class="form-control" id="password" formControlName="motPasse">
-      <div *ngIf="loginForm.get('motPasse')?.invalid && loginForm.get('motPasse')?.touched" class="text-danger">
-        Mot de passe requis
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="login-wrap p-0">
+          <h3 class="mb-4 text-center">Have an account?</h3>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="signin-form">
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Email" formControlName="email" required>
+              <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+                Email valide requis
+              </div>
+            </div>
+            <div class="form-group">
+              <input id="password-field" type="password" class="form-control" placeholder="Password" formControlName="motPasse" required>
+              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+              <div *ngIf="loginForm.get('motPasse')?.invalid && loginForm.get('motPasse')?.touched" class="text-danger">
+                Mot de passe requis
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="form-control btn btn-primary submit px-3" [disabled]="loginForm.invalid">
+                Sign In
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
-      Se connecter
-    </button>
-  </form>
-</div>
+  </div>
+</section>
+</body>
+</html>

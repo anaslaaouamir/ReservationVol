@@ -1,99 +1,69 @@
-// reservation.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Reservation } from 'src/app/models/reservation.model';
+import { HttpClient } from '@angular/common/http';
+import { Vol } from '../models/vol.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
-  private mockData: Reservation[] = [
-    {
-      idReservation: 1,
-      numeroPlace: 12,
-      dateReservation: new Date(),
-      statut: 'Confirmé',
-      idClient: 1,
-      idVol: 1,
-      client: {
-        id: 1,
-        nom: 'Dupont Jean',
-        email: 'jean@email.com'
-      },
-      vol: {
-        id: 1,
-        lieuDepart: 'Paris',
-        lieuArrivee: 'Lyon',
-        dateDepart: new Date()
-      },
-      paiement: {
-        id: 1,
-        montant: 150
-      }
-    },
-    {
-      idReservation: 1,
-      numeroPlace: 12,
-      dateReservation: new Date(),
-      statut: 'Confirmé',
-      idClient: 1,
-      idVol: 1,
-      client: {
-        id: 1,
-        nom: 'Dupont Jean',
-        email: 'jean@email.com'
-      },
-      vol: {
-        id: 1,
-        lieuDepart: 'Paris',
-        lieuArrivee: 'Lyon',
-        dateDepart: new Date()
-      },
-      paiement: {
-        id: 1,
-        montant: 150
-      }
-    },
-    {
-      idReservation: 1,
-      numeroPlace: 12,
-      dateReservation: new Date(),
-      statut: 'Confirmé',
-      idClient: 1,
-      idVol: 1,
-      client: {
-        id: 1,
-        nom: 'Dupont Jean',
-        email: 'jean@email.com'
-      },
-      vol: {
-        id: 1,
-        lieuDepart: 'Paris',
-        lieuArrivee: 'Lyon',
-        dateDepart: new Date()
-      },
-      paiement: {
-        id: 1,
-        montant: 150
-      }
-    },
-    // Ajoutez plus de données mock ici
-  ];
+  private apiUrl = 'http://localhost:9093';
 
-  getReservations(): Observable<Reservation[]> {
-    return of(this.mockData);
+  constructor(private http: HttpClient) { }
+
+  getReservation(id: number): Observable<Reservation> {
+    return this.http.get<Reservation>(`${this.apiUrl}/reservations/${id}`);
   }
 
-  updateReservation(reservation: Reservation): Observable<Reservation> {
-    const index = this.mockData.findIndex(r => r.idReservation === reservation.idReservation);
-    if (index !== -1) {
-      this.mockData[index] = { ...reservation };
-    }
-    return of(reservation);
+  getAllReservations(): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/reservations`);
+  }
+
+  addReservation(reservation: Reservation): Observable<Reservation> {
+    return this.http.post<Reservation>(`${this.apiUrl}/reservations`, reservation);
   }
 
   deleteReservation(id: number): Observable<void> {
-    this.mockData = this.mockData.filter(r => r.idReservation !== id);
-    return of(void 0);
+    return this.http.delete<void>(`${this.apiUrl}/reservations/${id}`);
+  }
+
+  getClientReservations(id: number): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/client_reservations/${id}`);
+  }
+
+  getVolReservations(id: number): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.apiUrl}/vol_reservations/${id}`);
+  }
+
+  updateReservation(id: number, reservation: Reservation): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/reservations/${id}`, reservation);
+  }
+
+  deleteVolReservations(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/vol_reservations/${id}`);
+  }
+
+  deleteClientReservations(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/client_reservations/${id}`);
+  }
+
+  getClientVolReserves(
+    idClient: number,
+    villeDepart?: string,
+    villeDestination?: string,
+    day?: number,
+    month?: number,
+    year?: number
+  ): Observable<Vol[]> {
+    let params = new URLSearchParams();
+    if (villeDepart) params.append('villeDepart', villeDepart);
+    if (villeDestination) params.append('villeDestination', villeDestination);
+    if (day) params.append('day', day.toString());
+    if (month) params.append('month', month.toString());
+    if (year) params.append('year', year.toString());
+
+    return this.http.get<Vol[]>(`${this.apiUrl}/clientVolReserves/${idClient}?${params.toString()}`);
   }
 }
+

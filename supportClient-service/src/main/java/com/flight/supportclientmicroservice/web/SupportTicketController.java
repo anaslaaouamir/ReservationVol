@@ -48,11 +48,18 @@ public class SupportTicketController {
 
     @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @GetMapping("/stickets/{id}")
-    public SupportTicket uneRservation(@PathVariable Long id) {
-        SupportTicket res = supportTicketRepository.findById(id).get();
-        Client cl = clientOpenFeign.findById(res.getIdClient());
-        res.setClient(cl);
-        return res;
+    public List<SupportTicket> clientTickets(@PathVariable Long id) {
+        List<SupportTicket> tickets = supportTicketRepository.findAll();
+        List<SupportTicket> ress = new ArrayList<>();
+
+        for (SupportTicket res : tickets) {
+            if(res.getIdClient().equals(id)){
+                Client cl = clientOpenFeign.findById(res.getIdClient());
+                res.setClient(cl);
+                ress.add(res);
+            }
+        }
+        return ress;
     }
 
     @PreAuthorize("hasRole('CLIENT')")
@@ -77,7 +84,7 @@ public class SupportTicketController {
         ticketMessageRepository.save(ticketMessage);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @DeleteMapping("/stickets/{id}")
     public ResponseEntity<?> supprimerTicket(@PathVariable Long id) {
         return supportTicketRepository.findById(id)
@@ -94,7 +101,7 @@ public class SupportTicketController {
         ticketMessageRepository.delete(ticketMessageRepository.findById(id).get());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @PutMapping("/stickets/{id}")
     public void ticketSolved(@PathVariable Long id) {
         SupportTicket st = supportTicketRepository.findById(id).get();

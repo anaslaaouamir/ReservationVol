@@ -1,3 +1,24 @@
+nav.p-menubar ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #f8f9fa; /* Couleur de fond */
+}
+
+nav.p-menubar ul li {
+  padding: 10px 20px;
+}
+
+nav.p-menubar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+nav.p-menubar ul li a:hover {
+  color: #007bff; /* Couleur au survol */
+}
 
 :host ::ng-deep .p-dialog-content {
   overflow-y: visible;

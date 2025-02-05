@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BookingListComponent } from './booking-list/booking-list.component';
-import { BookingDetailComponent } from './booking-detail/booking-detail.component';
+import { BookingPayementComponent} from './booking-payement/booking-payement.component';
 import { BookingFormComponent } from './booking-form/booking-form.component';
 import { authGuard } from "../../core/auth.guard";
 
 
 const routes: Routes = [
   { path: '', component: BookingListComponent },
-  { path: 'detail/:id', component: BookingDetailComponent },
+  { path: 'payment', component: BookingPayementComponent },
   { path: 'new', component: BookingFormComponent, canActivate: [authGuard] },
 ];
 

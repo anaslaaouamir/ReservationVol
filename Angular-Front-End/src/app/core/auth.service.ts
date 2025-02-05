@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import {BehaviorSubject, map, Observable, tap} from 'rxjs';
 import {Client} from "../models/client.model";
 
 @Injectable({
@@ -21,23 +21,19 @@ export class AuthService {
     return this.http.post<Client>(`${this.API_URL}/register`, client);
   }
 
-  login(email: string, motPasse: string): Observable<string> {
-    return this.http.post<string>(`${this.API_URL}/login`, { email, motPasse })
+  login(email: string, motPasse: string): Observable<void> {
+    return this.http.post<{ token: string; user: Client }>(`${this.API_URL}/login`, { email, motPasse })
       .pipe(
-        tap(token => {
-          localStorage.setItem('token', token);
-          // Stocker les informations du client
-          const clientInfo: Client = {
-            email: email,
-            nom: '', // À remplir avec les données du backend si disponibles
-            motPasse: '',
-            telephone: ''
-          };
-          localStorage.setItem('currentClient', JSON.stringify(clientInfo));
-          this.currentClientSubject.next(clientInfo);
-        })
+        tap(response => {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('currentClient', JSON.stringify(response.user));
+          this.currentClientSubject.next(response.user);
+        }),
+        map(() => void 0)
       );
   }
+
+
 
   logout(): void {
     localStorage.removeItem('token');
@@ -52,4 +48,18 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
+
+  getRoles(): string[] {
+    const clientData = localStorage.getItem('currentClient');
+    if (clientData) {
+      const client = JSON.parse(clientData);
+      return client.roles || [];
+    }
+    return [];
+  }
+
+  hasRole(role: string): boolean {
+    return this.getRoles().includes(role);
+  }
+
 }

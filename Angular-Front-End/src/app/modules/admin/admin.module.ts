@@ -15,6 +15,9 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {CalendarModule} from "primeng/calendar";
+import { AdminComponent } from './admin.component';
+import { SupportAdminChatComponent } from './support-admin-chat/support-admin-chat.component';
+import { SupportAdminComponent } from './support-admin/support-admin.component';
 
 
 
@@ -22,7 +25,10 @@ import {CalendarModule} from "primeng/calendar";
   declarations: [
     VolsComponent,
     ClientsComponent,
-    BookingsComponent
+    BookingsComponent,
+    AdminComponent,
+    SupportAdminChatComponent,
+    SupportAdminComponent
   ],
   imports: [
     CommonModule,

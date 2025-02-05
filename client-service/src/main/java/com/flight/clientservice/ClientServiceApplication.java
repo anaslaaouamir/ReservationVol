@@ -24,12 +24,12 @@ public class ClientServiceApplication {
     @Bean
     CommandLineRunner init(ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            Client c1=Client.builder().nom("Anas").email("anas@gmail.com").telephone("0642900745").motPasse(passwordEncoder.encode("1234")).roles(List.of("ROLE_ADMIN")).build();
+            /*Client c1=Client.builder().nom("Anas").email("anas@gmail.com").telephone("0642900745").motPasse(passwordEncoder.encode("1234")).roles(List.of("ROLE_ADMIN")).build();
             Client c2=Client.builder().nom("Mohammed").email("mohammed@gmail.com").telephone("0642900745").build();
             Client c3=Client.builder().nom("Youssef").email("youssef@gmail.com").telephone("0642900745").build();
 
             clientRepository.save(c1);clientRepository.save(c2);clientRepository.save(c3);
-
+*/
             List<Client> clients=clientRepository.findAll();
             System.out.println("testing ");
             for(Client c:clients){

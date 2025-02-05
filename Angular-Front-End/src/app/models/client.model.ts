@@ -4,8 +4,5 @@ export interface Client {
   email: string;
   motPasse: string;
   telephone: string;
-}
-
-export interface AuthResponse {
-  token: string;
+  role?: string[];
 }
