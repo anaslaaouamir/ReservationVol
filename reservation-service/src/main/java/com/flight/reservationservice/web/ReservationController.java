@@ -62,13 +62,16 @@ public class ReservationController {
     @PostMapping("reservations")
     public void ajouterReservation(@RequestBody Reservation reservation) {
         Vol vol= volOpenFeign.findById(reservation.getIdVol());
-         if(vol.getPlacesDisponibles()>0){
-             reservation.setStatut("attend paiement");
-             reservationRepository.save(reservation);
-             //volOpenFeign.decrement(reservation.getIdVol());
-         }else {
+        if(vol.getPlacesDisponibles()>0){
+            reservation.setStatut("attend paiement");
 
-         }
+            List<Reservation>  reservations=reservationRepository.findByIdVol(reservation.getIdVol());
+            reservation.setNumeroPlace(reservations.size()+1);
+
+            reservationRepository.save(reservation);
+        }else {
+
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")

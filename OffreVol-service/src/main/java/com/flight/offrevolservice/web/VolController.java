@@ -69,7 +69,7 @@ public class VolController {
     }
 
     // Accessible par le rôle CLIENT uniquement
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENT')")
     @PutMapping("/{id}/increment")
     public void increment(@PathVariable Long id) {
         Vol vol = volRepository.findById(id).orElseThrow();

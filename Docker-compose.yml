@@ -1,4 +1,25 @@
 services:
+
+  mysql-dock:
+    image: mysql:8
+    container_name: mysql-dock
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: client_bd
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3307:3306"
+    expose:
+      - "3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 3
+
   discovery-service:
     build: ./discovery-service
     container_name: discovery-dock
@@ -40,9 +61,15 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://discovery-dock:8761/eureka
       - CONFIG_SERVICE_URL=http://config-dock:9999
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-dock:3306/client_bd?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
     depends_on:
       config-service:
         condition: service_healthy
+      mysql-dock:
+        condition: service_healthy
+
   offrevol-service:
     build: ./offrevol-service
     container_name: offreVol-dock
@@ -57,9 +84,15 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://discovery-dock:8761/eureka
       - CONFIG_SERVICE_URL=http://config-dock:9999
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-dock:3306/vol_bd?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
     depends_on:
       config-service:
         condition: service_healthy
+      mysql-dock:
+        condition: service_healthy
+
   reservation-service:
     build: ./reservation-service
     container_name: reservation-dock
@@ -74,13 +107,19 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://discovery-dock:8761/eureka
       - CONFIG_SERVICE_URL=http://config-dock:9999
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-dock:3306/reservation_bd?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
     depends_on:
       config-service:
-        condition:  service_healthy
+        condition: service_healthy
       client-service:
         condition: service_healthy
       offrevol-service:
         condition: service_healthy
+      mysql-dock:
+        condition: service_healthy
+
   supportclient-microservice:
     build: ./supportclient-service
     container_name: supportClient-dock
@@ -95,9 +134,15 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://discovery-dock:8761/eureka
       - CONFIG_SERVICE_URL=http://config-dock:9999
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-dock:3306/stickets_bd?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
     depends_on:
       reservation-service:
         condition: service_healthy
+      mysql-dock:
+        condition: service_healthy
+
   gateway-service:
     build: ./gateway-service
     container_name: gateway-dock
@@ -113,3 +158,6 @@ services:
     depends_on:
       supportclient-microservice:
         condition: service_healthy
+
+volumes:
+  mysql-data:
